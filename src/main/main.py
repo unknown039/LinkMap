@@ -1,4 +1,5 @@
 import random
+import time
 
 # Basic periodic table data
 elements = [
@@ -39,29 +40,69 @@ def quiz():
     score = 0
     current_question = 0
     random.shuffle(elements)
+    print("Quiz over Elements 1-30! Type STOP At anytime to exit.")
 
-    for elem in elements:
-        q_type = random.choice(["name", "symbol", "number"])
+    while True:
+        if input('Would you like to do random mode or number only mode? ') == 'random':
+            start_time = time.time()
+            for elem in elements:
 
-        if q_type == "name":
-            answer = input(f"What is the name and symbol of element #{elem['number']}? ").strip().split()
-            correct = [elem['name'], elem['symbol']]
-        elif q_type == "symbol":
-            answer = input(f"What is the atomic number and symbol for {elem['name']}? ").strip().split()
-            correct = [elem['symbol'], str(elem['number'])]
-        else:  # number
-            answer = input(f"What is the atomic number and symbol of {elem['name']}? ").strip().split()
-            correct = [elem['symbol'], str(elem['number'])]
+                if current_question % 3 == 0: #number
+                    answer = input(f"{elem['number']} ").strip().split()
+                    correct = [elem['name'], elem['symbol']]
+                elif current_question % 3 == 1: #name
+                    answer = input(f"{elem['name']} ").strip().split()
+                    correct = [elem['symbol'], str(elem['number'])]
+                else:  #symbol
+                    answer = input(f"{elem['symbol']} ").strip().split()
+                    correct = [elem['name'], str(elem['number'])]
 
-        if sorted(answer) == sorted(correct):
-            print("Correct!\n")
-            score += 1
+                if answer[0] == 'STOP':
+                    exit()
+
+                if sorted(answer) == sorted(correct):
+                    print("Correct!\n")
+                    score += 1
+                else:
+                    print(answer)
+                    print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
+                current_question += 1
+                print(f"{score}/{current_question}")
+            print(f"Quiz finished! Your score: {score}/{len(elements)}")
+            print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
+            if input("Would you like to continue?") == 'STOP':
+                exit()
+            else:
+                print()
+            score = 0
+            current_question = 0
+            random.shuffle(elements)
         else:
-            print(f"Wrong. The correct answer is {correct}.\n")
-        current_question += 1
-        print(f"{score}/{current_question}")
+            start_time = time.time()
+            for elem in elements:
+                answer = input(f"{elem['number']} ").strip().split()
+                correct = [elem['name'], elem['symbol']]
 
-    print(f"Quiz finished! Your score: {score}/{len(elements)}")
+                if answer[0] == 'STOP':
+                    exit()
+
+                if sorted(answer) == sorted(correct):
+                    print("Correct!\n")
+                    score += 1
+                else:
+                    print(answer)
+                    print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
+                current_question += 1
+                print(f"{score}/{current_question}")
+            print(f"Quiz finished! Your score: {score}/{len(elements)}")
+            print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
+            if input("Would you like to continue?") == 'STOP':
+                exit()
+            else:
+                print()
+            score = 0
+            current_question = 0
+            random.shuffle(elements)
 
 
 if __name__ == "__main__":
