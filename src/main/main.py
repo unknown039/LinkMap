@@ -32,18 +32,30 @@ elements = [
     {"name": "Cobalt", "symbol": "Co", "number": 27},
     {"name": "Nickel", "symbol": "Ni", "number": 28},
     {"name": "Copper", "symbol": "Cu", "number": 29},
-    {"name": "Zinc", "symbol": "Zn", "number": 30}
+    {"name": "Zinc", "symbol": "Zn", "number": 30},
+    {"name": "Gallium", "symbol": "Ga", "number": 31},
+    {"name": "Germanium", "symbol": "Ge", "number": 32},
+    {"name": "Arsenic", "symbol": "As", "number": 33},
+    {"name": "Selenium", "symbol": "Se", "number": 34},
+    {"name": "Bromine", "symbol": "Br", "number": 35},
+    {"name": "Krypton", "symbol": "Kr", "number": 36},
+    {"name": "Rubidium", "symbol": "Rb", "number": 37},
+    {"name": "Strontium", "symbol": "Sr", "number": 38},
+    {"name": "Yttrium", "symbol": "Y", "number": 39},
+    {"name": "Zirconium", "symbol": "Zr", "number": 40}
 ]
+
 
 
 def quiz():
     score = 0
     current_question = 0
     random.shuffle(elements)
-    print("Quiz over Elements 1-30! Type STOP At anytime to exit.")
+    print(f"Quiz over Elements 1-{len(elements)}! Type STOP At anytime to exit.")
 
     while True:
-        if input('Would you like to do random mode or number only mode? ') == 'random':
+        current_mode = input('Would you like to do random mode or number/symbol/name only mode? ')
+        if current_mode == 'random':
             start_time = time.time()
             for elem in elements:
 
@@ -64,13 +76,12 @@ def quiz():
                     print("Correct!\n")
                     score += 1
                 else:
-                    print(answer)
                     print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
                 current_question += 1
                 print(f"{score}/{current_question}")
             print(f"Quiz finished! Your score: {score}/{len(elements)}")
             print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
-            if input("Would you like to continue?") == 'STOP':
+            if input("Would you like to continue?").lower() == 'no':
                 exit()
             else:
                 print()
@@ -78,32 +89,37 @@ def quiz():
             current_question = 0
             random.shuffle(elements)
         else:
-            start_time = time.time()
-            for elem in elements:
-                answer = input(f"{elem['number']} ").strip().split()
-                correct = [elem['name'], elem['symbol']]
+            non_random_mode(current_mode)
 
-                if answer[0] == 'STOP':
-                    exit()
+def non_random_mode(mode):
+    score = 0
+    current_question = 0
+    start_time = time.time()
+    for elem in elements:
+        answer = input(f"{elem[mode]} ").strip().split()
+        correct = [str(elem['name']), str(elem['symbol']), str(elem['number'])]
+        correct.remove(str(elem[mode]))
 
-                if sorted(answer) == sorted(correct):
-                    print("Correct!\n")
-                    score += 1
-                else:
-                    print(answer)
-                    print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
-                current_question += 1
-                print(f"{score}/{current_question}")
-            print(f"Quiz finished! Your score: {score}/{len(elements)}")
-            print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
-            if input("Would you like to continue?") == 'STOP':
-                exit()
-            else:
-                print()
-            score = 0
-            current_question = 0
-            random.shuffle(elements)
+        if answer[0] == 'STOP':
+            exit()
 
+        if sorted(answer) == sorted(correct):
+            print("Correct!\n")
+            score += 1
+        else:
+            print(answer)
+            print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
+        current_question += 1
+        print(f"{score}/{current_question}")
+    print(f"Quiz finished! Your score: {score}/{len(elements)}")
+    print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
+    if input("Would you like to continue? ") == 'STOP':
+        exit()
+    else:
+        print()
+    score = 0
+    current_question = 0
+    random.shuffle(elements)
 
 if __name__ == "__main__":
     quiz()
