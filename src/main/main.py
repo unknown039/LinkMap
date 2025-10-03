@@ -1,5 +1,6 @@
 import random
 import time
+import streamlit as st
 
 # Basic periodic table data
 elements = [
@@ -44,47 +45,47 @@ elements = [
     {"name": "Yttrium", "symbol": "Y", "number": 39},
     {"name": "Zirconium", "symbol": "Zr", "number": 40}
 ]
-
+st.title("Periodic Table Quiz")
 
 
 def quiz():
     score = 0
     current_question = 0
     random.shuffle(elements)
-    print(f"Quiz over Elements 1-{len(elements)}! Type STOP At anytime to exit.")
+    st.write(f"Quiz over Elements 1-{len(elements)}! Type STOP At anytime to exit.")
 
     while True:
-        current_mode = input('Would you like to do random mode or number/symbol/name only mode? ')
+        current_mode = st.text_input('Would you like to do random mode or number/symbol/name only mode? ')
         if current_mode == 'random':
             start_time = time.time()
             for elem in elements:
 
                 if current_question % 3 == 0: #number
-                    answer = input(f"{elem['number']} ").strip().split()
+                    answer = st.text_input(f"{elem['number']} ").strip().split()
                     correct = [elem['name'], elem['symbol']]
                 elif current_question % 3 == 1: #name
-                    answer = input(f"{elem['name']} ").strip().split()
+                    answer = st.text_input(f"{elem['name']} ").strip().split()
                     correct = [elem['symbol'], str(elem['number'])]
                 else:  #symbol
-                    answer = input(f"{elem['symbol']} ").strip().split()
+                    answer = st.text_input(f"{elem['symbol']} ").strip().split()
                     correct = [elem['name'], str(elem['number'])]
 
                 if answer[0] == 'STOP':
                     exit()
 
                 if sorted(answer) == sorted(correct):
-                    print("Correct!\n")
+                    st.write("Correct!\n")
                     score += 1
                 else:
-                    print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
+                    st.write(f"Wrong. The correct answer is {' '.join(correct)}.\n")
                 current_question += 1
-                print(f"{score}/{current_question}")
-            print(f"Quiz finished! Your score: {score}/{len(elements)}")
-            print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
-            if input("Would you like to continue?").lower() == 'no':
+                st.write(f"{score}/{current_question}")
+            st.write(f"Quiz finished! Your score: {score}/{len(elements)}")
+            st.write(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
+            if st.text_input("Would you like to continue?").lower() == 'no':
                 exit()
             else:
-                print()
+                st.write()
             score = 0
             current_question = 0
             random.shuffle(elements)
@@ -96,7 +97,7 @@ def non_random_mode(mode):
     current_question = 0
     start_time = time.time()
     for elem in elements:
-        answer = input(f"{elem[mode]} ").strip().split()
+        answer = st.text_input(f"{elem[mode]} ").strip().split()
         correct = [str(elem['name']), str(elem['symbol']), str(elem['number'])]
         correct.remove(str(elem[mode]))
 
@@ -104,22 +105,19 @@ def non_random_mode(mode):
             exit()
 
         if sorted(answer) == sorted(correct):
-            print("Correct!\n")
+            st.write("Correct!\n")
             score += 1
         else:
-            print(answer)
-            print(f"Wrong. The correct answer is {' '.join(correct)}.\n")
+            st.write(answer)
+            st.write(f"Wrong. The correct answer is {' '.join(correct)}.\n")
         current_question += 1
-        print(f"{score}/{current_question}")
-    print(f"Quiz finished! Your score: {score}/{len(elements)}")
-    print(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
-    if input("Would you like to continue? ") == 'STOP':
+        st.write(f"{score}/{current_question}")
+    st.write(f"Quiz finished! Your score: {score}/{len(elements)}")
+    st.write(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
+    if st.text_input("Would you like to continue? ") == 'STOP':
         exit()
     else:
-        print()
-    score = 0
-    current_question = 0
-    random.shuffle(elements)
+        st.write()
 
 if __name__ == "__main__":
     quiz()
