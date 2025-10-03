@@ -34,90 +34,53 @@ elements = [
     {"name": "Nickel", "symbol": "Ni", "number": 28},
     {"name": "Copper", "symbol": "Cu", "number": 29},
     {"name": "Zinc", "symbol": "Zn", "number": 30},
-    {"name": "Gallium", "symbol": "Ga", "number": 31},
-    {"name": "Germanium", "symbol": "Ge", "number": 32},
-    {"name": "Arsenic", "symbol": "As", "number": 33},
-    {"name": "Selenium", "symbol": "Se", "number": 34},
-    {"name": "Bromine", "symbol": "Br", "number": 35},
-    {"name": "Krypton", "symbol": "Kr", "number": 36},
-    {"name": "Rubidium", "symbol": "Rb", "number": 37},
-    {"name": "Strontium", "symbol": "Sr", "number": 38},
-    {"name": "Yttrium", "symbol": "Y", "number": 39},
-    {"name": "Zirconium", "symbol": "Zr", "number": 40}
 ]
+
 st.title("Periodic Table Quiz")
 
+# Initialize session state
+if "current_question" not in st.session_state:
+    st.session_state.current_question = 0
+if "score" not in st.session_state:
+    st.session_state.score = 0
+if "start_time" not in st.session_state:
+    st.session_state.start_time = time.time()
+if "elements" not in st.session_state:
+    st.session_state.elements = elements.copy()
+    random.shuffle(st.session_state.elements)
 
-def quiz():
-    score = 0
-    current_question = 0
-    random.shuffle(elements)
-    st.write(f"Quiz over Elements 1-{len(elements)}! Type STOP At anytime to exit.")
+# Stop the quiz
+if st.button("STOP"):
+    st.write(f"Quiz stopped. Your score: {st.session_state.score}/{st.session_state.current_question}")
+    st.stop()
 
-    while True:
-        current_mode = st.text_input('Would you like to do random mode or number/symbol/name only mode? ')
-        if current_mode == 'random':
-            start_time = time.time()
-            for elem in elements:
+# Determine the current element
+if st.session_state.current_question < len(st.session_state.elements):
+    elem = st.session_state.elements[st.session_state.current_question]
 
-                if current_question % 3 == 0: #number
-                    answer = st.text_input(f"{elem['number']} ").strip().split()
-                    correct = [elem['name'], elem['symbol']]
-                elif current_question % 3 == 1: #name
-                    answer = st.text_input(f"{elem['name']} ").strip().split()
-                    correct = [elem['symbol'], str(elem['number'])]
-                else:  #symbol
-                    answer = st.text_input(f"{elem['symbol']} ").strip().split()
-                    correct = [elem['name'], str(elem['number'])]
+    # Decide mode (rotate: number, name, symbol)
+    mode_cycle = ["number", "name", "symbol"]
+    mode = mode_cycle[st.session_state.current_question % 3]
 
-                if answer[0] == 'STOP':
-                    exit()
+    # Show prompt and input
+    user_answer = st.text_input(f"{elem[mode]} (enter the other two)")
+    submit = st.button("Submit")
 
-                if sorted(answer) == sorted(correct):
-                    st.write("Correct!\n")
-                    score += 1
-                else:
-                    st.write(f"Wrong. The correct answer is {' '.join(correct)}.\n")
-                current_question += 1
-                st.write(f"{score}/{current_question}")
-            st.write(f"Quiz finished! Your score: {score}/{len(elements)}")
-            st.write(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
-            if st.text_input("Would you like to continue?").lower() == 'no':
-                exit()
-            else:
-                st.write()
-            score = 0
-            current_question = 0
-            random.shuffle(elements)
-        else:
-            non_random_mode(current_mode)
-
-def non_random_mode(mode):
-    score = 0
-    current_question = 0
-    start_time = time.time()
-    for elem in elements:
-        answer = st.text_input(f"{elem[mode]} ").strip().split()
+    if submit and user_answer:
+        answer = user_answer.strip().split()
         correct = [str(elem['name']), str(elem['symbol']), str(elem['number'])]
         correct.remove(str(elem[mode]))
 
-        if answer[0] == 'STOP':
-            exit()
-
         if sorted(answer) == sorted(correct):
-            st.write("Correct!\n")
-            score += 1
+            st.write("Correct!")
+            st.session_state.score += 1
         else:
-            st.write(answer)
-            st.write(f"Wrong. The correct answer is {' '.join(correct)}.\n")
-        current_question += 1
-        st.write(f"{score}/{current_question}")
-    st.write(f"Quiz finished! Your score: {score}/{len(elements)}")
-    st.write(f"You finished the quiz in: {(time.time() - start_time):.2f} seconds!")
-    if st.text_input("Would you like to continue? ") == 'STOP':
-        exit()
-    else:
-        st.write()
+            st.write(f"Wrong. Correct answer: {' '.join(correct)}")
 
-if __name__ == "__main__":
-    quiz()
+        st.session_state.current_question += 1
+        st.experimental_rerun()
+else:
+    # Quiz finished
+    elapsed = time.time() - st.session_state.start_time
+    st.write(f"Quiz finished! Your score: {st.session_state.score}/{len(st.session_state.elements)}")
+    st.write(f"Time taken: {elapsed:.2f} seconds")
