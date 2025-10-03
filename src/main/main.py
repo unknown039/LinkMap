@@ -139,7 +139,7 @@ if submit:
     if user_input.strip().upper() == "STOP":
         st.warning("Quiz stopped by user. Resetting.")
         reset_quiz_state()
-        st.experimental_rerun()
+        st.rerun()
 
     if not user_input.strip():
         st.warning("Empty answer — please type something or STOP to quit.")
@@ -163,13 +163,13 @@ if submit:
             if st.button("Play again (same mode)"):
                 # restart with same mode
                 start_quiz(st.session_state.mode)
-                st.experimental_rerun()
+                st.rerun()
             if st.button("Play again (choose mode)"):
                 reset_quiz_state()
-                st.experimental_rerun()
+                st.rerun()
             if st.button("Quit"):
                 reset_quiz_state()
-                st.experimental_rerun()
+                st.rerun()
         else:
             # continue to next question (re-run will show next prompt)
-            st.experimental_rerun()
+            st.rerun()
