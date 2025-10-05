@@ -47,6 +47,16 @@ ELEMENTS = [
     {"name": "Strontium", "symbol": "Sr", "number": 38},
     {"name": "Yttrium", "symbol": "Y", "number": 39},
     {"name": "Zirconium", "symbol": "Zr", "number": 40},
+    {"name": "Niobium", "symbol": "Nb", "number": 41},
+    {"name": "Molybdenum", "symbol": "Mo", "number": 42},
+    {"name": "Technetium", "symbol": "Tc", "number": 43},
+    {"name": "Ruthenium", "symbol": "Ru", "number": 44},
+    {"name": "Rhodium", "symbol": "Rh", "number": 45},
+    {"name": "Palladium", "symbol": "Pd", "number": 46},
+    {"name": "Silver", "symbol": "Ag", "number": 47},
+    {"name": "Cadmium", "symbol": "Cd", "number": 48},
+    {"name": "Indium", "symbol": "In", "number": 49},
+    {"name": "Tin", "symbol": "Sn", "number": 50}
 ]
 
 # --- Helpers ---
