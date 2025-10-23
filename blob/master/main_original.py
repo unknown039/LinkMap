@@ -56,8 +56,6 @@ def format_correct(correct):
 
 
 def start_quiz():
-    print("Welcome to the Periodic Table Quiz!")
-    print("Type 'STOP' anytime to quit.\n")
     modes = ["random", "number", "name", "symbol"]
     print("Modes:")
     print("- random: cycles between number → name → symbol")
@@ -116,6 +114,16 @@ def start_quiz():
     print(f"Final score: {score} / {len(elements)}")
     print(f"Total time: {duration:.2f} seconds")
 
+    replay = input("Do you want to keep practicing? (yes/no): ").lower()
+    if replay not in ("yes", "y"):
+        print("Thanks for playing! Goodbye.")
+        return
+    else:
+        print()
+        start_quiz()
+
 
 if __name__ == "__main__":
+    print("Welcome to the Periodic Table Quiz!")
+    print("Type 'STOP' anytime to quit.\n")
     start_quiz()
