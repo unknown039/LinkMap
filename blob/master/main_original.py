@@ -14,7 +14,7 @@ ELEMENTS = [
     {"name": "Neon", "symbol": "Ne", "number": 10},
     {"name": "Sodium", "symbol": "Na", "number": 11},
     {"name": "Magnesium", "symbol": "Mg", "number": 12},
-    {"name": "Aluminum", "symbol": "Al", "number": 13},
+    {"name": "Aluminium", "symbol": "Al", "number": 13},
     {"name": "Silicon", "symbol": "Si", "number": 14},
     {"name": "Phosphorus", "symbol": "P", "number": 15},
     {"name": "Sulfur", "symbol": "S", "number": 16},
@@ -42,7 +42,18 @@ ELEMENTS = [
     {"name": "Strontium", "symbol": "Sr", "number": 38},
     {"name": "Yttrium", "symbol": "Y", "number": 39},
     {"name": "Zirconium", "symbol": "Zr", "number": 40},
+    {"name": "Niobium", "symbol": "Nb", "number": 41},
+    {"name": "Molybdenum", "symbol": "Mo", "number": 42},
+    {"name": "Technetium", "symbol": "Tc", "number": 43},
+    {"name": "Ruthenium", "symbol": "Ru", "number": 44},
+    {"name": "Rhodium", "symbol": "Rh", "number": 45},
+    {"name": "Palladium", "symbol": "Pd", "number": 46},
+    {"name": "Silver", "symbol": "Ag", "number": 47},
+    {"name": "Cadmium", "symbol": "Cd", "number": 48},
+    {"name": "Indium", "symbol": "In", "number": 49},
+    {"name": "Tin", "symbol": "Sn", "number": 50},
 ]
+
 
 
 def evaluate_answer(user_text, correct):
@@ -77,16 +88,16 @@ def start_quiz():
         if mode == "random":
             qtype = idx % 3
             if qtype == 0:
-                prompt_text = f"Element with atomic number {elem['number']}: "
+                prompt_text = f"{elem['number']}: "
                 correct = [elem["name"], elem["symbol"]]
             elif qtype == 1:
-                prompt_text = f"Element with name {elem['name']}: "
+                prompt_text = f"{elem['name']}: "
                 correct = [elem["symbol"], str(elem["number"])]
             else:
-                prompt_text = f"Element with symbol {elem['symbol']}: "
+                prompt_text = f"{elem['symbol']}: "
                 correct = [elem["name"], str(elem["number"])]
         else:
-            prompt_text = f"Element with {mode} {elem[mode]}: "
+            prompt_text = f"{elem[mode]}: "
             correct = [str(elem["name"]), str(elem["symbol"]), str(elem["number"])]
             correct.remove(str(elem[mode]))
 
@@ -106,7 +117,7 @@ def start_quiz():
                 print("Correct!\n")
                 score += 1
             else:
-                print(f"Wrong. Correct answer: {format_correct(correct)}\n")
+                print(f"wrong. Correct answer: {format_correct(correct)}\n")
             break
 
     duration = time.time() - start_time
