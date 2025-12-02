@@ -51,7 +51,18 @@ ELEMENTS = [
     {"name": "Silver", "symbol": "Ag", "number": 47},
     {"name": "Cadmium", "symbol": "Cd", "number": 48},
     {"name": "Indium", "symbol": "In", "number": 49},
-    {"name": "Tin", "symbol": "Sn", "number": 50},
+    {"name": "Tin", "symbol": "Sn", "number": 50}
+]
+
+POLYNOMERS = [
+  {"name": "Borate", "symbol": "BO₃³⁻"},
+  {"name": "Carbonate", "symbol": "CO₃²⁻"},
+  {"name": "Chlorate", "symbol": "ClO₃⁻"},
+  {"name": "Chromate", "symbol": "CrO₄²⁻"},
+  {"name": "Nitrate", "symbol": "NO₃⁻"},
+  {"name": "Phosphate", "symbol": "PO₄³⁻"},
+  {"name": "Silicate", "symbol": "SiO₃²⁻"},
+  {"name": "Sulfate", "symbol": "SO₄²⁻"}
 ]
 
 
