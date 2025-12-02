@@ -14,7 +14,7 @@ ELEMENTS = [
     {"name": "Neon", "symbol": "Ne", "number": 10},
     {"name": "Sodium", "symbol": "Na", "number": 11},
     {"name": "Magnesium", "symbol": "Mg", "number": 12},
-    {"name": "Aluminium", "symbol": "Al", "number": 13},
+    {"name": "Aluminum", "symbol": "Al", "number": 13},
     {"name": "Silicon", "symbol": "Si", "number": 14},
     {"name": "Phosphorus", "symbol": "P", "number": 15},
     {"name": "Sulfur", "symbol": "S", "number": 16},
