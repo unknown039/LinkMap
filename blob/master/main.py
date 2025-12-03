@@ -24,22 +24,39 @@ def editor_mode():
     elif subject_level == "p" and data[subject] is None:
         print("That subject does not exist.")
 
-    quiz = input("What quiz would you like to add? ")
+    quiz = input("What quiz would you like to add? ").lower().strip()
 
-    if quiz == "STOP":
+    if quiz == "stop":
         end()
-    elif quiz == "BACK":
+    elif quiz == "back":
         return
-    elif quiz == "FINISHED":
+    elif quiz == "finished":
         data[subject][quiz] = None
+
+    num_of_elements = None
+
+    while True:
+        num_of_elements = input("How many entries would you like to have in this quiz? ")
+
+        try:
+            num_of_elements = int(num_of_elements)
+        except ValueError:
+            print("You must enter a positive integer. Try again\n")
+            continue
+
+        if num_of_elements <= 0:
+            print("You must enter a positive integer. Try again\n")
+        else:
+            break
 
 
 def learner_mode():
     print(f"Temp")
 
 if __name__ == "__main__":
+    print("Type STOP at any moment to end the program")
+
     while True:
-        print("Type STOP at any moment to end the program")
         role = input("Are you editing or learning? (E/L) ").lower().strip()
         print()
 
