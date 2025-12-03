@@ -54,7 +54,7 @@ ELEMENTS = [
     {"name": "Tin", "symbol": "Sn", "number": 50}
 ]
 
-POLYNOMERS = [
+POLYMERS = [
   {"name": "Borate", "symbol": "BO₃³⁻"},
   {"name": "Carbonate", "symbol": "CO₃²⁻"},
   {"name": "Chlorate", "symbol": "ClO₃⁻"},
@@ -64,7 +64,6 @@ POLYNOMERS = [
   {"name": "Silicate", "symbol": "SiO₃²⁻"},
   {"name": "Sulfate", "symbol": "SO₄²⁻"}
 ]
-
 
 
 def evaluate_answer(user_text, correct):
