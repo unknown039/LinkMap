@@ -1,3 +1,4 @@
+"""
 import random
 import time
 
@@ -146,5 +147,117 @@ def start_quiz():
 
 if __name__ == "__main__":
     print("Welcome to the Periodic Table Quiz!")
+    print("Type 'STOP' anytime to quit.\n")
+    start_quiz()
+"""
+
+#!/usr/bin/env python3
+"""
+Polymers quiz migrated from the original Periodic Table quiz.
+Modes supported: random, name, symbol
+- random: alternates prompts between polymer name and symbol
+- name: give the symbol for the shown name
+- symbol: give the name for the shown symbol
+
+Type 'STOP' at any prompt to quit early.
+"""
+
+import random
+import time
+
+POLYMERS = [
+    {"name": "Borate", "symbol": "BO_3^(3-)"},
+    {"name": "Carbonate", "symbol": "CO_3^(2-)"},
+    {"name": "Chlorate", "symbol": "ClO_3^(-)"},
+    {"name": "Chromate", "symbol": "CrO_4^(2-)"},
+    {"name": "Nitrate", "symbol": "NO_3^(-)"},
+    {"name": "Phosphate", "symbol": "PO_4^(3-)"},
+    {"name": "Silicate", "symbol": "SiO_3^(2-)"},
+    {"name": "Sulfate", "symbol": "SO_4^(2-)"}
+]
+
+
+def evaluate_answer(user_text, correct):
+    """Simple tokenizer + comparison.
+    Comparison is case-insensitive and token-order-independent.
+    """
+    user_tokens = [t.strip().lower() for t in user_text.split() if t.strip()]
+    correct_tokens = [str(t).strip().lower() for t in correct]
+    return sorted(user_tokens) == sorted(correct_tokens)
+
+
+def format_correct(correct):
+    return " ".join(map(str, correct))
+
+
+def start_quiz():
+    modes = ["random", "name", "symbol"]
+    print("Modes:")
+    print("- random: alternates between name ↔ symbol prompts")
+    print("- name / symbol: prompt is that field; provide the other one")
+    print(f"Polymers available: {len(POLYMERS)}")
+
+    while True:
+        mode = input(f"Choose a mode ({', '.join(modes)}): ").strip().lower()
+        if mode in modes:
+            break
+        print("Invalid mode, try again.")
+
+    items = POLYMERS.copy()
+    random.shuffle(items)
+    score = 0
+    start_time = time.time()
+
+    for idx, item in enumerate(items):
+        if mode == "random":
+            qtype = idx % 2
+            if qtype == 0:
+                prompt_text = f"{item['name']}: "
+                correct = [item["symbol"]]
+            else:
+                prompt_text = f"{item['symbol']}: "
+                correct = [item["name"]]
+        else:
+            prompt_text = f"{item[mode]}: "
+            if mode == "name":
+                correct = [item["symbol"]]
+            else:  # symbol
+                correct = [item["name"]]
+
+        while True:
+            user_input = input(
+                f"Q{idx + 1}/{len(items)} ({mode}) | Score: {score} | Elapsed: {time.time() - start_time:.1f}s\n{prompt_text}")
+            if user_input.strip().upper() == "STOP":
+                print("\nQuiz stopped by user.")
+                duration = time.time() - start_time
+                print(f"Final score: {score} / {idx}")
+                print(f"Total time: {duration:.2f} seconds")
+                return
+            if not user_input.strip():
+                print("Empty answer — please type something or 'STOP' to quit.")
+                continue
+            if evaluate_answer(user_input, correct):
+                print("Correct!\n")
+                score += 1
+            else:
+                print(f"wrong. Correct answer: {format_correct(correct)}\n")
+            break
+
+    duration = time.time() - start_time
+    print("Quiz finished!")
+    print(f"Final score: {score} / {len(items)}")
+    print(f"Total time: {duration:.2f} seconds")
+
+    replay = input("Do you want to keep practicing? (yes/no): ").lower()
+    if replay not in ("yes", "y"):
+        print("Thanks for playing! Goodbye.")
+        return
+    else:
+        print()
+        start_quiz()
+
+
+if __name__ == "__main__":
+    print("Welcome to the Polymers Quiz!")
     print("Type 'STOP' anytime to quit.\n")
     start_quiz()
