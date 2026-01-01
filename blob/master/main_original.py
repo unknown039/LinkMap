@@ -151,19 +151,9 @@ if __name__ == "__main__":
     start_quiz()
 """
 
-#!/usr/bin/env python3
-"""
-Polymers quiz migrated from the original Periodic Table quiz.
-Modes supported: random, name, symbol
-- random: alternates prompts between polymer name and symbol
-- name: give the symbol for the shown name
-- symbol: give the name for the shown symbol
-
-Type 'STOP' at any prompt to quit early.
-"""
-
 import random
 import time
+import re
 
 POLYMERS = [
     {"name": "Borate", "symbol": "BO_3^(3-)"},
@@ -173,21 +163,29 @@ POLYMERS = [
     {"name": "Nitrate", "symbol": "NO_3^(-)"},
     {"name": "Phosphate", "symbol": "PO_4^(3-)"},
     {"name": "Silicate", "symbol": "SiO_3^(2-)"},
-    {"name": "Sulfate", "symbol": "SO_4^(2-)"}
+    {"name": "Sulfate", "symbol": "SO_4^(2-)"},
+    {"name": "Acetate", "symbol": "C_2H_3O_2^(-)"},
+    {"name": "Dichromate", "symbol": "Cr_2O_7^(2-)"},
+    {"name": "Dihydrogen phosphate", "symbol": "H_2PO_4^(-)"},
+    {"name": "Hydrogen phosphate", "symbol": "HPO_4^(2-)"},
+    {"name": "Hydrogen sulfate", "symbol": "HSO_4^(-)"}
 ]
 
 
+def _normalize(s: str) -> str:
+    s = str(s).lower()
+    # replace common grouping characters with nothing, keep letters/digits/+/- only
+    return re.sub(r'[^a-z0-9+\-]', '', s)
+
+
 def evaluate_answer(user_text, correct):
-    """Simple tokenizer + comparison.
-    Comparison is case-insensitive and token-order-independent.
-    """
-    user_tokens = [t.strip().lower() for t in user_text.split() if t.strip()]
-    correct_tokens = [str(t).strip().lower() for t in correct]
-    return sorted(user_tokens) == sorted(correct_tokens)
+    user_norm = _normalize(user_text)
+    correct_norms = [_normalize(c) for c in correct]
+    return any(user_norm == cn for cn in correct_norms)
 
 
 def format_correct(correct):
-    return " ".join(map(str, correct))
+    return " / ".join(map(str, correct))
 
 
 def start_quiz():
