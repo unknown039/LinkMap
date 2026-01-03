@@ -8,7 +8,7 @@ def editor_mode(data, end):
         if subject_level == "finished":
             return
         else:
-            keywords_checker(subject_level, end)
+            keywords_checker(subject_level)
 
         print()
 
@@ -20,7 +20,7 @@ def editor_mode(data, end):
         elif subject_level == "m" and subject not in data:
             print("That subject does not exist.")
         else:
-            keywords_checker(subject, end)
+            keywords_checker(subject)
 
             if subject_level == "c":
                 data[subject] = {}
@@ -31,8 +31,10 @@ def editor_mode(data, end):
             data[subject][quiz] = {}
             return
         else:
-            keywords_checker(quiz, end)
+            keywords_checker(quiz)
             data[subject][quiz] = {}
+
+        print()
 
         finished_adding_questions = False
         last_type_of_assessment_item = None
@@ -52,36 +54,81 @@ def editor_mode(data, end):
                 if last_type_of_assessment_item == "finished":
                     return
                 else:
-                    keywords_checker(last_type_of_assessment_item, end)
+                    keywords_checker(last_type_of_assessment_item)
             else:
-                if input("Do you want to add another question? (Y/N) ").strip().lower() == "n":
+                print()
+                adding_question_decision = input("Do you want to add another question? (Y/N) ").strip().lower()
+                if adding_question_decision == "n":
                     print()
                     data[subject][quiz] = quiz_questions_dictionary
+                    break
+                elif adding_question_decision == 'finished':
+                    print()
+                    data[subject][quiz] = quiz_questions_dictionary
+                    return
+                elif adding_question_decision == 'y':
+                    pass
+                else:
+                    keywords_checker(adding_question_decision)
+                    print("Please enter Y, N, or one of the keywords")
+                    current_number_of_questions -= 1
                     continue
 
-                if input("Do you want to continue adding the same type of assessment items? (Y/N)").strip().lower() == "n":
-                    last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
-                                                         f"(MC)  Multiple Choice\n"
-                                                         f"(SDR) Selected-Response\n"
-                                                         f"(M)   Matching\n"
-                                                         f"(SR)  Short Response\n"
-                                                         f"(S)   Sequence\n").strip().lower()
 
+
+                while True:
+                    same_type = input("Do you want to continue adding the same type of assessment items? (Y/N)").strip().lower()
+                    if same_type == "n":
+                        last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
+                                                             f"(MC)  Multiple Choice\n"
+                                                             f"(SDR) Selected-Response\n"
+                                                             f"(M)   Matching\n"
+                                                             f"(SR)  Short Response\n"
+                                                             f"(S)   Sequence\n").strip().lower()
+                        break
+                    elif same_type == "y":
+                        break
+                    elif same_type == "finished":
+                        print()
+                        data[subject][quiz] = quiz_questions_dictionary
+                        return
+                    else:
+                        keywords_checker(adding_question_decision)
+                        print("Please enter Y, N, or one of the keywords")
+                        current_number_of_questions -= 1
+                        continue
+
+            print()
 
             if last_type_of_assessment_item == "mc":
                 question = input("Question: ")
-                quiz_questions_dictionary[str(current_number_of_questions)] = [question] + input("Answers: ").strip().split(",") + ["MC"]
+                quiz_questions_dictionary[current_number_of_questions] = [question] + input("Answers: ").strip().split(",") + ["MC"]
             elif last_type_of_assessment_item == "sdr":
-                num_of_correct_answers = input("How many correct answers are there? ")
-                question = input("Question: ")
-                quiz_questions_dictionary[str(current_number_of_questions)] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
+                while True:
+                    num_of_correct_answers = input("How many correct answers are there? ").strip().lower()
+                    if num_of_correct_answers == "finished":
+                        print()
+                        data[subject][quiz] = quiz_questions_dictionary
+                        return
+                    else:
+                        keywords_checker(num_of_correct_answers)
 
-def keywords_checker(response, end_function):
+                        try:
+                            num_of_correct_answers = int(num_of_correct_answers)
+                            break
+                        except ValueError:
+                            print(f"Please enter a number")
+                            continue
+
+                question = input("Question: ")
+                quiz_questions_dictionary[current_number_of_questions] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
+
+def keywords_checker(response):
     from .. main import end
 
-    response = str(response)
+    response = str(response).strip().lower()
 
     if response == 'back':
         raise ReturnToBeginning
     elif response == 'stop':
-        end_function()
+        end()
