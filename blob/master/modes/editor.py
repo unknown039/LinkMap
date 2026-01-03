@@ -6,9 +6,7 @@ def editor_mode(data, end):
     subject_level = input("Would you like to add a new subject or proceed to an existing subject? (A/P) ").lower().strip()
     subject = input("Subject: ").lower().strip()
 
-    if subject_level == "a":
-        data[subject] = {}
-    elif subject_level == "finished":
+    if subject_level == "finished":
         return
     elif subject_level == "back":
         return
@@ -16,6 +14,16 @@ def editor_mode(data, end):
         end()
     elif subject_level == "p" and data[subject] is None:
         print("That subject does not exist.")
+
+    if subject == "finished":
+        data[subject] = {}
+        end()
+    elif subject == "stop":
+        end()
+    elif subject == "back":
+        return
+    elif subject_level == "a":
+        data[subject] = {}
 
     quiz = input("What quiz would you like to add? ").lower().strip()
 
@@ -32,8 +40,10 @@ def editor_mode(data, end):
     finished_adding_questions = False
     last_type_of_assessment_item = None
     quiz_questions_dictionary = {}
+    current_number_of_questions = 0
 
     while not finished_adding_questions:
+        current_number_of_questions += 1
         if last_type_of_assessment_item is None:
             last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
                                                  f"(MC)  Multiple Choice\n"
@@ -52,10 +62,13 @@ def editor_mode(data, end):
                                                      f"(SDR) Selected-Response\n"
                                                      f"(M)   Matching\n"
                                                      f"(SR)  Short Response\n"
-                                                     f"(S)   Sequence").strip().lower()
+                                                     f"(S)   Sequence\n").strip().lower()
 
 
         if last_type_of_assessment_item == "mc":
             question = input("Question: ")
-            quiz_questions_dictionary[question] = input("Answers: ").strip().split(",") + ["MC"]
-
+            quiz_questions_dictionary[str(current_number_of_questions)] = [question] + input("Answers: ").strip().split(",") + ["MC"]
+        elif last_type_of_assessment_item == "sdr":
+            num_of_correct_answers = input("How many correct answers are there? ")
+            question = input("Question: ")
+            quiz_questions_dictionary[str(current_number_of_questions)] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
