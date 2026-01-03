@@ -25,19 +25,10 @@ def editor_mode(data, end):
         return
     elif quiz == "finished":
         data[subject][quiz] = {}
+        return
+    else:
+        data[subject][quiz] = {}
 
-    num_of_elements = None
+    finished_adding_questions = False
 
-    while True:
-        num_of_elements = input("How many entries would you like to have in this quiz? ")
-
-        try:
-            num_of_elements = int(num_of_elements)
-        except ValueError:
-            print("You must enter a positive integer. Try again\n")
-            continue
-
-        if num_of_elements <= 0:
-            print("You must enter a positive integer. Try again\n")
-        else:
-            break
+    while not finished_adding_questions:
