@@ -1,4 +1,9 @@
-LinkMap currently supports 5 assessment item types:
+### LinkMap Keywords in Editor Mode (can be type at any moment):
+- **FINISHED** at any moment to save your changes. 
+- **STOP** would end the program and discard your changes.
+- **BACK** would take you back to the beginning page (a.k.a. the one that asks what would you like to do) and discard your changes.
+
+### LinkMap currently supports 5 assessment item types:
 - Multiple Choice
 - Selected-Response
 - Matching

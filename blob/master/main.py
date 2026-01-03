@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import blob.master.modes.editor as editor
+from blob.master.modes.editor import ReturnToBeginning
 
 with open(Path(__file__).parent.parent/"resource"/"data.json", "r") as f:
     data = json.load(f)
@@ -17,12 +18,23 @@ if __name__ == "__main__":
     print("Type STOP at any moment to end the program")
 
     while True:
-        role = input("Are you editing or learning? (E/L) ").lower().strip()
-        print()
+        try:
+            role = input("Are you editing or learning? (E/L) ").lower().strip()
+            print()
 
-        if role == "e":
-            editor.editor_mode(data, end)
-        elif role == "l":
-            learner_mode()
-        elif role == "stop":
-            end()
+            if role == "e":
+                editor.editor_mode(data, end)
+            elif role == "l":
+                learner_mode()
+            elif role == "stop":
+                end()
+        except ReturnToBeginning:
+            role = input("Are you editing or learning? (E/L) ").lower().strip()
+            print()
+
+            if role == "e":
+                editor.editor_mode(data, end)
+            elif role == "l":
+                learner_mode()
+            elif role == "stop":
+                end()
