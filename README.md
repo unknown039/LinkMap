@@ -70,4 +70,19 @@ Element 3: an
 Element 4: example  
 Element 5:   
 
-Saved sequence: ("this", "is", "an", "example")
+Saved sequence: ("this", "is", "an", "example")  
+
+### Set Completion
+The user is provided with an element of a set, and they provide all other elements of the
+set.
+
+In Editor Mode, separates the element in the set by a comma. Enter nothing to finish. The
+amount of elements within each set can vary
+
+Example:   
+Set 1: Hydrogen,1  
+Set 2: Helium,2,He,4.0026  
+Set 3: Lithium,3,Li  
+Set 4:  
+
+Stored set of sets: [(Hydrogen,1), (Helium,2,He,4.0026), (Lithium,3,Li)]

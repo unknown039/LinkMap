@@ -44,11 +44,12 @@ def editor_mode(data, end):
                 current_question_number += 1
                 if last_type_of_assessment_item is None:
                     last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
-                                                         f"(MC)  Multiple Choice\n"
-                                                         f"(SDR) Selected-Response\n"
-                                                         f"(M)   Matching\n"
-                                                         f"(SR)  Short Response\n"
-                                                         f"(S)   Sequence\n").strip().lower()
+                                                                 f"(MC)  Multiple Choice\n"
+                                                                 f"(SDR) Selected-Response\n"
+                                                                 f"(M)   Matching\n"
+                                                                 f"(S)   Sequence\n"
+                                                                 f"(SC)  Set Completion\n"
+                                                                 f"(SR)  Short Response\n").strip().lower()
 
                     if last_type_of_assessment_item == "finished":
                         return
@@ -150,6 +151,19 @@ def editor_mode(data, end):
                             break
                         else:
                             quiz_questions_dictionary[current_question_number].append(element)
+                elif last_type_of_assessment_item == "sc":
+                    quiz_questions_dictionary[current_question_number] = []
+                    set_number = 0
+
+                    while True:
+                        set_number += 1
+                        set_of_elements = input(f"Set {set_number}: ").split(",")
+
+                        if set_of_elements == [""]:
+                            quiz_questions_dictionary[current_question_number].append("SC")
+                            break
+                        else:
+                            quiz_questions_dictionary[current_question_number].append(set_of_elements)
 
 def keywords_checker(response):
     from .. main import end
