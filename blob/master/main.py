@@ -8,7 +8,7 @@ with open(Path(__file__).parent.parent/"resource"/"data.json", "r") as f:
     data = json.load(f)
 
 def end():
-    print(data)
+    print(json.dumps(data, indent=4))
     raise SystemExit("Exiting LinkMap")
 
 def learner_mode():

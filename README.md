@@ -49,7 +49,25 @@ Example (Program Provided (Boy, Girl)):
 In Editor Mode, the user must provide their sets in this format:  
 element1,element2,element3,... elementA,elementB,elementC,...   
 
-The two sets are in parentheses and are separated by spaces (there can be as many spaces as needed, but there must be at least one)  
+The two sets are in parentheses and are separated by spaces (there can be as many 
+spaces as needed, but there must be at least one)  
 
-When they are finished, they should type "MATCHED". This will take them back to the first page in Editor Mode.  
+When they are finished, they should type "MATCHED". This will take them back to the first 
+page in Editor Mode.  
 Empty sets and single element sets are accepted.
+
+### Sequence
+The user is provided with a set of elements that must rearranged in the correct order. To 
+complete the task, they will enter the elements in the same format in the editor. 
+
+In Editor Mode, enter the elements one at a time in the correct order. To finish, enter 
+nothing.
+
+Example:  
+Element 1: This  
+Element 2: is   
+Element 3: an   
+Element 4: example  
+Element 5:   
+
+Saved sequence: ("this", "is", "an", "example")

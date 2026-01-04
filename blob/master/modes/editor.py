@@ -76,7 +76,8 @@ def editor_mode(data, end):
 
 
                     while True:
-                        same_type = input("Do you want to continue adding the same type of assessment items? (Y/N)").strip().lower()
+                        same_type = input("Do you want to continue adding the same type of assessment items? (Y/N) ").strip().lower()
+                        print()
                         if same_type == "n":
                             last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
                                                                  f"(MC)  Multiple Choice\n"
@@ -102,11 +103,9 @@ def editor_mode(data, end):
                 print()
 
                 if last_type_of_assessment_item == "mc":
-                    quiz_questions_dictionary.clear()
                     question = input("Question: ")
                     quiz_questions_dictionary[current_question_number] = [question] + input("Answers: ").strip().split(",") + ["MC"]
                 elif last_type_of_assessment_item == "sdr":
-                    quiz_questions_dictionary.clear()
                     while True:
                         num_of_correct_answers = input("How many correct answers are there? ").strip().lower()
                         if num_of_correct_answers == "finished":
@@ -126,7 +125,6 @@ def editor_mode(data, end):
                     question = input("Question: ")
                     quiz_questions_dictionary[current_question_number] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
                 elif last_type_of_assessment_item == "m":
-                    quiz_questions_dictionary.clear()
                     quiz_questions_dictionary[current_question_number] = []
 
                     while True:
@@ -139,6 +137,19 @@ def editor_mode(data, end):
                             quiz_questions_dictionary[current_question_number].append([element_set[0].split(","), element_set[1].split(",")])
                         else:
                             print("Enter a valid token or in the correct format according to the documentation. Keywords do not work here")
+                elif last_type_of_assessment_item == "s":
+                    quiz_questions_dictionary[current_question_number] = []
+                    element_number = 0
+
+                    while True:
+                        element_number += 1
+                        element = input(f"Element {element_number}: ")
+
+                        if not element:
+                            quiz_questions_dictionary[current_question_number].append("S")
+                            break
+                        else:
+                            quiz_questions_dictionary[current_question_number].append(element)
 
 def keywords_checker(response):
     from .. main import end
