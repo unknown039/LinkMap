@@ -164,6 +164,8 @@ def editor_mode(data, end):
                             break
                         else:
                             quiz_questions_dictionary[current_question_number].append(set_of_elements)
+                elif last_type_of_assessment_item == "sr":
+                    quiz_questions_dictionary[current_question_number] = [input(f"Question: "), input(f"Answer: "), "SR"]
 
 def keywords_checker(response):
     from .. main import end

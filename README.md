@@ -85,4 +85,9 @@ Set 2: Helium,2,He,4.0026
 Set 3: Lithium,3,Li  
 Set 4:  
 
-Stored set of sets: [(Hydrogen,1), (Helium,2,He,4.0026), (Lithium,3,Li)]
+Stored set of sets: [(Hydrogen,1), (Helium,2,He,4.0026), (Lithium,3,Li)]  
+
+### Short Response
+The user is provided with a question, and they must provide the answer  
+
+In Editor Mode, simply enter the question, hit enter, then enter the answer, and hit enter.
