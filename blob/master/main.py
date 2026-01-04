@@ -26,7 +26,7 @@ if __name__ == "__main__":
                 editor.editor_mode(data, end)
             elif role == "l":
                 learner_mode()
-            elif role == "stop":
+            elif role == "stop" or role == "finished":
                 end()
         except ReturnToBeginning:
             role = input("Are you editing or learning? (E/L) ").lower().strip()
@@ -36,5 +36,5 @@ if __name__ == "__main__":
                 editor.editor_mode(data, end)
             elif role == "l":
                 learner_mode()
-            elif role == "stop":
+            elif role == "stop" or role == "finished":
                 end()

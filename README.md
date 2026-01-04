@@ -6,12 +6,13 @@ would you like to do) and discard your changes.
   
 These keywords work everywhere except the prompt for questions and answers.
 
-### LinkMap currently supports 5 assessment item types:
+### LinkMap currently supports 6 assessment item types:
 - Multiple Choice
 - Selected-Response
 - Matching
-- Short Response
 - Sequence
+- Set completion
+- Short Response
 
 ### Multiple Choice
 The user is provided with a question and a list of answers.
@@ -35,3 +36,20 @@ time, the program will discard information about the number of correct answers.
 Example:  
 "How many answers are there? 3"  
 "answer1,answer2,answer3,answer4,answer5" - answer1, answer2, and answer3 are the correct answers
+
+
+### Matching
+
+The user is provided with a set of elements, and they must provide all elements in the 
+other set, separated by a /.  
+
+Example (Program Provided (Boy, Girl)):  
+(Boy, Girl): (Male, Female)  
+
+In Editor Mode, the user must provide their sets in this format:  
+element1,element2,element3,... elementA,elementB,elementC,...   
+
+The two sets are in parentheses and are separated by spaces (there can be as many spaces as needed, but there must be at least one)  
+
+When they are finished, they should type "MATCHED". This will take them back to the first page in Editor Mode.  
+Empty sets and single element sets are accepted.

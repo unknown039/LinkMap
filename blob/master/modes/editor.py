@@ -2,126 +2,143 @@ class ReturnToBeginning (Exception):
     pass
 
 def editor_mode(data, end):
-    while True:
-        subject_level = input("Create subject or modify existing subject (C/M): ").lower().strip()
+        while True:
+            subject_level = input("Create subject or modify existing subject (C/M): ").lower().strip()
 
-        if subject_level == "finished":
-            return
-        else:
-            keywords_checker(subject_level)
-
-        print()
-
-        subject = input("Subject: ").lower().strip()
-
-        if subject == "finished":
-            data[subject] = {}
-            end()
-        elif subject_level == "m" and subject not in data:
-            print("That subject does not exist.")
-        else:
-            keywords_checker(subject)
-
-            if subject_level == "c":
-                data[subject] = {}
-
-        quiz = input("Quiz Name: ").lower().strip()
-
-        if quiz == "finished":
-            data[subject][quiz] = {}
-            return
-        else:
-            keywords_checker(quiz)
-            data[subject][quiz] = {}
-
-        print()
-
-        finished_adding_questions = False
-        last_type_of_assessment_item = None
-        quiz_questions_dictionary = {}
-        current_number_of_questions = 0
-
-        while not finished_adding_questions:
-            current_number_of_questions += 1
-            if last_type_of_assessment_item is None:
-                last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
-                                                     f"(MC)  Multiple Choice\n"
-                                                     f"(SDR) Selected-Response\n"
-                                                     f"(M)   Matching\n"
-                                                     f"(SR)  Short Response\n"
-                                                     f"(S)   Sequence\n").strip().lower()
-
-                if last_type_of_assessment_item == "finished":
-                    return
-                else:
-                    keywords_checker(last_type_of_assessment_item)
+            if subject_level == "finished":
+                return
             else:
-                print()
-                adding_question_decision = input("Do you want to add another question? (Y/N) ").strip().lower()
-                if adding_question_decision == "n":
-                    print()
-                    data[subject][quiz] = quiz_questions_dictionary
-                    break
-                elif adding_question_decision == 'finished':
-                    print()
-                    data[subject][quiz] = quiz_questions_dictionary
-                    return
-                elif adding_question_decision == 'y':
-                    pass
-                else:
-                    keywords_checker(adding_question_decision)
-                    print("Please enter Y, N, or one of the keywords")
-                    current_number_of_questions -= 1
-                    continue
-
-
-
-                while True:
-                    same_type = input("Do you want to continue adding the same type of assessment items? (Y/N)").strip().lower()
-                    if same_type == "n":
-                        last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
-                                                             f"(MC)  Multiple Choice\n"
-                                                             f"(SDR) Selected-Response\n"
-                                                             f"(M)   Matching\n"
-                                                             f"(SR)  Short Response\n"
-                                                             f"(S)   Sequence\n").strip().lower()
-                        break
-                    elif same_type == "y":
-                        break
-                    elif same_type == "finished":
-                        print()
-                        data[subject][quiz] = quiz_questions_dictionary
-                        return
-                    else:
-                        keywords_checker(adding_question_decision)
-                        print("Please enter Y, N, or one of the keywords")
-                        current_number_of_questions -= 1
-                        continue
+                keywords_checker(subject_level)
 
             print()
 
-            if last_type_of_assessment_item == "mc":
-                question = input("Question: ")
-                quiz_questions_dictionary[current_number_of_questions] = [question] + input("Answers: ").strip().split(",") + ["MC"]
-            elif last_type_of_assessment_item == "sdr":
-                while True:
-                    num_of_correct_answers = input("How many correct answers are there? ").strip().lower()
-                    if num_of_correct_answers == "finished":
+            subject = input("Subject: ").lower().strip()
+
+            if subject == "finished":
+                data[subject] = {}
+                end()
+            elif subject_level == "m" and subject not in data:
+                print("That subject does not exist.")
+            else:
+                keywords_checker(subject)
+
+                if subject_level == "c":
+                    data[subject] = {}
+
+            quiz = input("Quiz Name: ").lower().strip()
+
+            if quiz == "finished":
+                data[subject][quiz] = {}
+                return
+            else:
+                keywords_checker(quiz)
+                data[subject][quiz] = {}
+
+            print()
+
+            last_type_of_assessment_item = None
+            quiz_questions_dictionary = {}
+            current_question_number = 0
+
+            while True:
+                current_question_number += 1
+                if last_type_of_assessment_item is None:
+                    last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
+                                                         f"(MC)  Multiple Choice\n"
+                                                         f"(SDR) Selected-Response\n"
+                                                         f"(M)   Matching\n"
+                                                         f"(SR)  Short Response\n"
+                                                         f"(S)   Sequence\n").strip().lower()
+
+                    if last_type_of_assessment_item == "finished":
+                        return
+                    else:
+                        keywords_checker(last_type_of_assessment_item)
+                else:
+                    print()
+                    adding_question_decision = input("Do you want to add another question? (Y/N) ").strip().lower()
+                    if adding_question_decision == "n":
+                        print()
+                        data[subject][quiz] = quiz_questions_dictionary
+                        break
+                    elif adding_question_decision == 'finished':
                         print()
                         data[subject][quiz] = quiz_questions_dictionary
                         return
+                    elif adding_question_decision == 'y':
+                        pass
                     else:
-                        keywords_checker(num_of_correct_answers)
+                        keywords_checker(adding_question_decision)
+                        print("Please enter Y, N, or one of the keywords")
+                        current_question_number -= 1
+                        continue
 
-                        try:
-                            num_of_correct_answers = int(num_of_correct_answers)
+
+
+                    while True:
+                        same_type = input("Do you want to continue adding the same type of assessment items? (Y/N)").strip().lower()
+                        if same_type == "n":
+                            last_type_of_assessment_item = input(f"Choose one type of assessment items to add:\n"
+                                                                 f"(MC)  Multiple Choice\n"
+                                                                 f"(SDR) Selected-Response\n"
+                                                                 f"(M)   Matching\n"
+                                                                 f"(S)   Sequence\n"
+                                                                 f"(SC)  Set Completion\n"
+                                                                 f"(SR)  Short Response\n"
+                                                                 ).strip().lower()
                             break
-                        except ValueError:
-                            print(f"Please enter a number")
+                        elif same_type == "y":
+                            break
+                        elif same_type == "finished":
+                            print()
+                            data[subject][quiz] = quiz_questions_dictionary
+                            return
+                        else:
+                            keywords_checker(adding_question_decision)
+                            print("Please enter Y, N, or one of the keywords")
+                            current_question_number -= 1
                             continue
 
-                question = input("Question: ")
-                quiz_questions_dictionary[current_number_of_questions] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
+                print()
+
+                if last_type_of_assessment_item == "mc":
+                    quiz_questions_dictionary.clear()
+                    question = input("Question: ")
+                    quiz_questions_dictionary[current_question_number] = [question] + input("Answers: ").strip().split(",") + ["MC"]
+                elif last_type_of_assessment_item == "sdr":
+                    quiz_questions_dictionary.clear()
+                    while True:
+                        num_of_correct_answers = input("How many correct answers are there? ").strip().lower()
+                        if num_of_correct_answers == "finished":
+                            print()
+                            data[subject][quiz] = quiz_questions_dictionary
+                            return
+                        else:
+                            keywords_checker(num_of_correct_answers)
+
+                            try:
+                                num_of_correct_answers = int(num_of_correct_answers)
+                                break
+                            except ValueError:
+                                print(f"Please enter a number")
+                                continue
+
+                    question = input("Question: ")
+                    quiz_questions_dictionary[current_question_number] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
+                elif last_type_of_assessment_item == "m":
+                    quiz_questions_dictionary.clear()
+                    quiz_questions_dictionary[current_question_number] = []
+
+                    while True:
+                        element_set = input(f"Sets: ").split()
+
+                        if element_set[0].lower() == "matched":
+                            quiz_questions_dictionary[current_question_number] = quiz_questions_dictionary[current_question_number] + ["M"]
+                            break
+                        elif len(element_set) == 2:
+                            quiz_questions_dictionary[current_question_number].append([element_set[0].split(","), element_set[1].split(",")])
+                        else:
+                            print("Enter a valid token or in the correct format according to the documentation. Keywords do not work here")
 
 def keywords_checker(response):
     from .. main import end
