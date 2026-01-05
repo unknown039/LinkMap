@@ -1,3 +1,5 @@
+# Editor Mode
+
 ### LinkMap Keywords in Editor Mode:
 - **FINISHED** at any moment to save your changes. 
 - **STOP** would end the program and discard your changes.
@@ -90,4 +92,13 @@ Stored set of sets: [(Hydrogen,1), (Helium,2,He,4.0026), (Lithium,3,Li)]
 ### Short Response
 The user is provided with a question, and they must provide the answer  
 
-In Editor Mode, simply enter the question, hit enter, then enter the answer, and hit enter.
+In Editor Mode, simply enter the question, hit enter, then enter the answer, and hit 
+enter.  
+
+
+# Learner Mode
+
+### LinkMap Keywords in Editor Mode:
+- **STOP** would end the program immediately and show your score (if there is one).
+- **BACK** would take you back to the beginning page (a.k.a. the one that asks what
+would you like to do).  

@@ -38,7 +38,7 @@ def editor_mode(data, end):
 
             last_type_of_assessment_item = None
             quiz_questions_dictionary = {}
-            current_question_number = 0
+            current_question_number = len(data[subject][quiz])
 
             while True:
                 current_question_number += 1
