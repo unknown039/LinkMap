@@ -53,7 +53,7 @@ def learner_mode(copied_data):
             correct_answer = None
             current_question = current_quiz[current_question_number]
 
-            print(f"Q{current_question_number}/{quiz_length} ({quiz}) | Score: {score} | Elapsed: {time.time()-start_time:.1f}s")
+            print(f"Q{current_question_number + 1}/{quiz_length} ({quiz}) | Score: {score} | Elapsed: {time.time()-start_time:.1f}s")
 
             if current_question[-1] == "MC":
                 correct_answer = current_question[1].strip().lower()
@@ -65,6 +65,8 @@ def learner_mode(copied_data):
 
                 for i in range(len(current_quiz[current_question_number])):
                     print(f"{alphabet[i]}. {current_quiz[current_question_number][i]}")
+                    if current_quiz[current_question_number][i] == correct_answer:
+                        correct_answer = alphabet[i].lower()
 
                 answer = input(f"\nAnswer: ").strip().lower()
 
@@ -72,7 +74,7 @@ def learner_mode(copied_data):
                 score += 1
                 print(f"Correct!\n")
             else:
-                print(f"Incorrect. The answer is {correct_answer}.\n")
+                print(f"Incorrect. The answer is {correct_answer.upper()}.\n")
 
         print(f"Quiz Finished!")
         print(f"Final score: {score}/{quiz_length}")
