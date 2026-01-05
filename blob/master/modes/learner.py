@@ -1,3 +1,4 @@
+import copy
 import random
 import time
 
@@ -5,8 +6,14 @@ from blob.master.modes.editor import ReturnToBeginning
 
 
 
-def learner_mode(data):
+def learner_mode(copied_data):
+    alphabet = ["A", "B", "C", "D", "E", "F", "G",
+     "H", "I", "J", "K", "L", "M",
+     "N", "O", "P", "Q", "R", "S",
+     "T", "U", "V", "W", "X", "Y", "Z"]
+
     while True:
+        data = copy.deepcopy(copied_data)
         score = 0
 
         while True:
@@ -50,15 +57,14 @@ def learner_mode(data):
 
             if current_question[-1] == "MC":
                 correct_answer = current_question[1].strip().lower()
-                print(f'"Correct" Answer: {correct_answer}')
 
-                print(f"{current_question[0]}")
+                print(f"Question: {current_question[0]}")
                 current_question.pop(0)
                 current_question.pop()
                 random.shuffle(current_question)
 
                 for i in range(len(current_quiz[current_question_number])):
-                    print(f"{current_quiz[current_question_number][i]}")
+                    print(f"{alphabet[i]}. {current_quiz[current_question_number][i]}")
 
                 answer = input(f"\nAnswer: ").strip().lower()
 

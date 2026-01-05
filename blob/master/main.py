@@ -13,6 +13,7 @@ with open(data_file_path, "r") as f:
 
 def end():
     print(json.dumps(data, indent=4))
+    print("File is overwritten")
     with open (data_file_path, "w") as f:
         f.write(json.dumps(data, indent=4))
     raise SystemExit("Exiting LinkMap")
@@ -42,5 +43,7 @@ if __name__ == "__main__":
                 editor.editor_mode(data, end)
             elif role == "l":
                 learner.learner_mode(data)
-            elif role == "stop" or role == "finished":
+            elif role == "finished":
                 end()
+            elif role == "stop":
+                end_learning()

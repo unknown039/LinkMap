@@ -168,11 +168,11 @@ def editor_mode(data, end):
                     quiz_questions_dictionary[current_question_number] = [input(f"Question: "), input(f"Answer: "), "SR"]
 
 def keywords_checker(response):
-    from .. main import end
+    from .. main import end_learning
 
     response = str(response).strip().lower()
 
     if response == 'back':
         raise ReturnToBeginning
     elif response == 'stop':
-        end()
+        end_learning()
