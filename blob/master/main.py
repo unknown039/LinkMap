@@ -41,6 +41,6 @@ if __name__ == "__main__":
             if role == "e":
                 editor.editor_mode(data, end)
             elif role == "l":
-                learner.learner_mode(data, end_learning)
+                learner.learner_mode(data)
             elif role == "stop" or role == "finished":
                 end()
