@@ -45,6 +45,8 @@ def learner_mode(copied_data):
         print()
 
         start_time = time.time()
+        total_points = 0
+        points_possible = 0;
 
         for current_question_number in range(quiz_length):
             correct_answer = ""
@@ -55,6 +57,7 @@ def learner_mode(copied_data):
             print(f"Q{current_question_number + 1}/{quiz_length} ({quiz}) | Score: {score} | Elapsed: {time.time()-start_time:.1f}s")
 
             if current_question[-1] == "MC":
+                points_possible = 1
                 correct_answer = current_question[1].strip().lower()
 
                 print(f"Question: {current_question[0]}")
@@ -78,28 +81,35 @@ def learner_mode(copied_data):
             elif current_question[-1] == "SDR":
                 points_earned = 0
                 num_of_correct_answers = current_question[-2]
-                correct_answers_raw = current_question[1:num_of_correct_answers]
+                correct_answers_raw = current_question[1:num_of_correct_answers + 1]
                 correct_answers_list = list()
+                correct_answer = ""
+                points_possible = num_of_correct_answers
 
-                print(f"Question: {current_question[0]}")
+                print(f"{current_question[0]}")
                 answers_list = current_question[1:-2]
+                random.shuffle(answers_list)
 
                 for i in range(len(answers_list)):
                     print(f"{alphabet[i]}. {answers_list[i]}")
 
                     if answers_list[i] in correct_answers_raw:
                         correct_answers_list.append(alphabet[i].lower())
+                        correct_answer += alphabet[i].upper() + ","
 
-                    answers = input(f"\nAnswer: ").strip().lower().split(",")
-                    user_is_correct = True
+                answers = input(f"\nAnswer: ").strip().lower().split(",")
+                user_is_correct = True
 
-                    for answer in answers:
-                        if answer in correct_answers_list:
-                            points_earned += 1
-                        else:
-                            user_is_correct = False
-                            points_earned -= 1
+                for answer in answers:
+                    if answer.lower() in correct_answers_list:
+                        points_earned += 1
+                    else:
+                        user_is_correct = False
+                        points_earned -= 1
+                if len(answers) < len(correct_answers_list):
+                    user_is_correct = False
 
+                correct_answer = correct_answer[:-1]
 
             if user_is_correct:
                 score += points_earned
@@ -107,8 +117,10 @@ def learner_mode(copied_data):
             else:
                 print(f"Incorrect. The answer is {correct_answer.upper()}.\n")
 
+            total_points += points_possible
+
         print(f"Quiz Finished!")
-        print(f"Final score: {score}/{quiz_length}")
+        print(f"Final score: {score}/{total_points}")
         print(f"Total time: {time.time()-start_time:.1f}s\n")
 
         continue_quiz = input("Do you want to continue in learner mode? (Y/N): ").lower().strip()

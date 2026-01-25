@@ -1,6 +1,25 @@
 {
     "math": {
         "algebra": {
+            "1": [
+                "3x\u22127=11",
+                "6",
+                "4",
+                "18",
+                "-4",
+                "MC"
+            ],
+            "2": [
+                "What is the slope of the line passing through (2, 5) and (6, 13)?",
+                "2",
+                "3",
+                "4",
+                "8",
+                "MC"
+            ],
+            "3": [
+                "Simplify: (x^2)(x^5)", "x^7", "x^10", "x^25", "2x^7", "MC"
+            ],
             "4": [
                 "Which of the following numbers are prime?",
                 "2",
