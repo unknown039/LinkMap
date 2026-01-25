@@ -85,7 +85,7 @@ def learner_mode(copied_data):
                 correct_answers_list = list()
                 correct_answer = ""
                 points_possible = num_of_correct_answers
-                point_cap = False
+                point_should_cap = False
 
                 print(f"{current_question[0]}")
                 answers_list = current_question[1:-3]
@@ -106,21 +106,22 @@ def learner_mode(copied_data):
                         points_earned += 1
                     else:
                         user_is_correct = False
-                        point_cap = True
-                        points_earned -= 1
+                        point_should_cap = True
                 if len(answers) < len(correct_answers_list):
                     user_is_correct = False
 
                 correct_answer = correct_answer[:-1]
-                if points_earned > point_cap:
-                    points_earned = point_cap
+                if points_earned > point_should_cap and point_should_cap:
+                    points_earned = current_question[-3]
+
+                print(f"Points in SDR: {points_earned}")
 
             if user_is_correct:
-                score += points_earned
                 print(f"Correct!\n")
             else:
                 print(f"Incorrect. The answer is {correct_answer.upper()}.\n")
 
+            score += points_earned
             total_points += points_possible
 
         print(f"Quiz Finished!")
