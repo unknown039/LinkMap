@@ -18,7 +18,8 @@ def editor_mode(data, end):
                 print()
 
                 if subject == "finished":
-                    data[subject] = {}
+                    if not data[subject]:
+                        data[subject] = {}
                     end()
                 elif subject_level == "m" and subject not in data:
                     print("That subject does not exist.")
@@ -112,9 +113,9 @@ def editor_mode(data, end):
             print()
 
             last_type_of_assessment_item = None
-            quiz_questions_dictionary = {}
+            quiz_questions_dictionary = data[subject][quiz]
             current_question_number = len(data[subject][quiz])
-            print(current_question_number)
+            print(f"# of Q in quiz: {current_question_number}")
 
             while True:
                 current_question_number += 1
@@ -198,8 +199,27 @@ def editor_mode(data, end):
                                 print(f"Please enter a number")
                                 continue
 
+                    while True:
+                        partial_score_cap = input("Score Cap with Error(s): ")
+
+                        if partial_score_cap == "finished":
+                            print()
+                            data[subject][quiz] = quiz_questions_dictionary
+                            return
+                        else:
+                            keywords_checker(partial_score_cap)
+
+                            try:
+                                partial_score_cap = int(partial_score_cap)
+                                break
+                            except ValueError:
+                                print(f"Please enter a number")
+                                continue
+
                     question = input("Question: ")
-                    quiz_questions_dictionary[current_question_number] = [question] + input("Answers: ").strip().split(",") + [num_of_correct_answers] + ["SDR"]
+                    quiz_questions_dictionary[current_question_number] = ([question] + input("Answers: ").strip().split(",")
+                                                                          + [partial_score_cap] + [num_of_correct_answers]
+                                                                          + ["SDR"])
                 elif last_type_of_assessment_item == "m":
                     quiz_questions_dictionary[current_question_number] = []
 

@@ -18,40 +18,48 @@
                 "MC"
             ],
             "3": [
-                "Simplify: (x^2)(x^5)", "x^7", "x^10", "x^25", "2x^7", "MC"
+                "Simplify: (x^2)(x^5)",
+                "x^7",
+                "x^10",
+                "x^25",
+                "2x^7",
+                "MC"
             ],
             "4": [
-                "Which of the following numbers are prime?",
+                "Which of the following are even numbers?",
                 "2",
-                "3",
-                "5",
                 "4",
                 "6",
-                "8",
+                "7",
+                "9",
+                "11",
+                2,
                 3,
                 "SDR"
             ],
             "5": [
-                "Select all factors of 12",
-                "1",
+                "Select all prime numbers less than 10:",
                 "2",
                 "3",
-                "4",
-                "6",
-                "12",
                 "5",
                 "7",
-                6,
+                "4",
+                "6",
+                "8",
+                "9",
+                3,
+                4,
                 "SDR"
             ],
             "6": [
-                "Select all solutions: x^2 - 4 = 0",
-                "2",
-                "-2",
-                "0",
-                "4",
-                "-4",
+                "Which of the following fractions are equivalent to 1/2?",
+                "2/4",
+                "3/6",
+                "4/8",
+                "1/3",
+                "3/4",
                 2,
+                3,
                 "SDR"
             ]
         }

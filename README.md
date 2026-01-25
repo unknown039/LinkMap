@@ -31,7 +31,11 @@ the user is provided with a question a list of answers. User select multiple
 answers as correct answers in the same format as entering them in the editor.
 
 In editor mode, the program will ask how many correct answers there are, n (zero is a 
-valid option), followed by prompting the options for the answers. The program will pick
+valid option). Next, set your Score Cap with errors. This means that if the learner 
+select an incorrect answer, then **their score cannot go above the Score Cap. Enter nothing
+if there is no score cap (not recommended).  
+
+Then, the program will prompt for the answers. It will pick
 the first n answers as the correct one. If you use the keyword "FINISHED" during this 
 time, the program will discard information about the number of correct answers.
 

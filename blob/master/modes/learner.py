@@ -46,7 +46,7 @@ def learner_mode(copied_data):
 
         start_time = time.time()
         total_points = 0
-        points_possible = 0;
+        points_possible = 0
 
         for current_question_number in range(quiz_length):
             correct_answer = ""
@@ -85,9 +85,10 @@ def learner_mode(copied_data):
                 correct_answers_list = list()
                 correct_answer = ""
                 points_possible = num_of_correct_answers
+                point_cap = False
 
                 print(f"{current_question[0]}")
-                answers_list = current_question[1:-2]
+                answers_list = current_question[1:-3]
                 random.shuffle(answers_list)
 
                 for i in range(len(answers_list)):
@@ -105,11 +106,14 @@ def learner_mode(copied_data):
                         points_earned += 1
                     else:
                         user_is_correct = False
+                        point_cap = True
                         points_earned -= 1
                 if len(answers) < len(correct_answers_list):
                     user_is_correct = False
 
                 correct_answer = correct_answer[:-1]
+                if points_earned > point_cap:
+                    points_earned = point_cap
 
             if user_is_correct:
                 score += points_earned
