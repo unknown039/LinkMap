@@ -4,8 +4,6 @@ import time
 
 from blob.master.modes.editor import ReturnToBeginning
 
-
-
 def learner_mode(copied_data):
     alphabet = ["A", "B", "C", "D", "E", "F", "G",
      "H", "I", "J", "K", "L", "M",
@@ -49,8 +47,9 @@ def learner_mode(copied_data):
         start_time = time.time()
 
         for current_question_number in range(quiz_length):
-            answer = None
-            correct_answer = None
+            correct_answer = ""
+            user_is_correct = None
+            points_earned = None
             current_question = current_quiz[current_question_number]
 
             print(f"Q{current_question_number + 1}/{quiz_length} ({quiz}) | Score: {score} | Elapsed: {time.time()-start_time:.1f}s")
@@ -70,8 +69,40 @@ def learner_mode(copied_data):
 
                 answer = input(f"\nAnswer: ").strip().lower()
 
-            if answer == correct_answer:
-                score += 1
+                if correct_answer == answer:
+                    user_is_correct = True
+                    points_earned = 1
+                else:
+                    user_is_correct = False
+                    points_earned = 0
+            elif current_question[-1] == "SDR":
+                points_earned = 0
+                num_of_correct_answers = current_question[-2]
+                correct_answers_raw = current_question[1:num_of_correct_answers]
+                correct_answers_list = list()
+
+                print(f"Question: {current_question[0]}")
+                answers_list = current_question[1:-2]
+
+                for i in range(len(answers_list)):
+                    print(f"{alphabet[i]}. {answers_list[i]}")
+
+                    if answers_list[i] in correct_answers_raw:
+                        correct_answers_list.append(alphabet[i].lower())
+
+                    answers = input(f"\nAnswer: ").strip().lower().split(",")
+                    user_is_correct = True
+
+                    for answer in answers:
+                        if answer in correct_answers_list:
+                            points_earned += 1
+                        else:
+                            user_is_correct = False
+                            points_earned -= 1
+
+
+            if user_is_correct:
+                score += points_earned
                 print(f"Correct!\n")
             else:
                 print(f"Incorrect. The answer is {correct_answer.upper()}.\n")

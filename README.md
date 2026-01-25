@@ -28,7 +28,7 @@ Example:
 ### Selected-Response
 
 the user is provided with a question a list of answers. User select multiple 
-answers as correct answers  
+answers as correct answers in the same format as entering them in the editor.
 
 In editor mode, the program will ask how many correct answers there are, n (zero is a 
 valid option), followed by prompting the options for the answers. The program will pick

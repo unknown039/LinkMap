@@ -168,13 +168,27 @@ POLYMERS = [
     {"name": "Dichromate", "symbol": "Cr_2O_7^(2-)"},
     {"name": "Dihydrogen phosphate", "symbol": "H_2PO_4^(-)"},
     {"name": "Hydrogen phosphate", "symbol": "HPO_4^(2-)"},
+    {"name": "Hydrogen carbonate", "symbol": "HCO_3^(-)"},
     {"name": "Hydrogen sulfate", "symbol": "HSO_4^(-)"},
     {"name": "Oxalate", "symbol": "C_2O_4^(2-)"},
     {"name": "Perchlorate", "symbol": "ClO_4^(-)"},
     {"name": "Permanganate", "symbol": "MnO_4^(-)"},
     {"name": "Thiocyanate", "symbol": "SCN^(-)"},
-    {"name": "Thiosulfate", "symbol": "S_2O_3^(2-)"}
+    {"name": "Thiosulfate", "symbol": "S_2O_3^(2-)"},
+    {"name": "Chlorite", "symbol": "ClO_2^(-)"},
+    {"name": "Hydrogen sulfite", "symbol": "HSO_3^(-)"},
+    {"name": "Hypochlorite", "symbol": "ClO^(-)"},
+    {"name": "Nitrite", "symbol": "NO_2^(-)"},
+    {"name": "Phosphite", "symbol": "PO_3^(3-)"},
+    {"name": "Sulfite", "symbol": "SO_3^(2-)"},
+    {"name": "Ammonium", "symbol": "NH_4^(+)"},
+    {"name": "Cyanide", "symbol": "CN^(-)"},
+    {"name": "Hydronium", "symbol": "H_3O^(+)"},
+    {"name": "Hydroxide", "symbol": "OH^(-)"},
+    {"name": "Peroxide", "symbol": "O_2^(2-)"}
 ]
+
+
 
 
 def _normalize(s: str) -> str:
