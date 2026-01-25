@@ -29,7 +29,6 @@ def editor_mode(data, end):
                     if subject_level == "c" and not data[subject]:
                         data[subject] = {}
                         subject_is_chosen = True
-                        break
                     elif subject_level == "c" and data[subject]:
                         print("There is already a subject under this name.")
 
@@ -47,8 +46,11 @@ def editor_mode(data, end):
                                 break
                             else:
                                 continue
+                    elif subject_level == "m" and data[subject]:
+                        subject_is_chosen = True
+                        continue
 
-            quiz_level = input("\nCreate a quiz or modify existing quiz (C/M): ").lower().strip()
+            quiz_level = input("Create a quiz or modify existing quiz (C/M): ").lower().strip()
 
             if quiz_level == "finished":
                 return
@@ -102,7 +104,6 @@ def editor_mode(data, end):
 
                 if different_quiz_edit:
                     different_quiz_edit = False
-                    print()
                     continue
                 else:
                     break
