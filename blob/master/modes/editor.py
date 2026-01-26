@@ -224,7 +224,7 @@ def editor_mode(data, end):
                     quiz_questions_dictionary[current_question_number] = []
 
                     while True:
-                        element_set = input(f"Sets: ").split()
+                        element_set = input(f"Sets: ").split("~")
 
                         if element_set[0].lower() == "matched":
                             quiz_questions_dictionary[current_question_number] = quiz_questions_dictionary[current_question_number] + ["M"]

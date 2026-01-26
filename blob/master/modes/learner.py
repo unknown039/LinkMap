@@ -113,8 +113,8 @@ def learner_mode(copied_data):
                 correct_answer = correct_answer[:-1]
                 if points_earned > point_should_cap and point_should_cap:
                     points_earned = current_question[-3]
-
-                print(f"Points in SDR: {points_earned}")
+            elif current_question[-1] == "M":
+                points_earned = 0
 
             if user_is_correct:
                 print(f"Correct!\n")

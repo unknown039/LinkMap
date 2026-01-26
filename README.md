@@ -47,13 +47,16 @@ Example:
 ### Matching
 
 The user is provided with a set of elements, and they must provide all elements in the 
-other set, separated by a /.  
+other set, separated by a ~.  
 
 Example (Program Provided (Boy, Girl)):  
-(Boy, Girl): (Male, Female)  
+(Boy,Girl): (Male,Female)  
 
-In Editor Mode, the user must provide their sets in this format:  
-element1,element2,element3,... elementA,elementB,elementC,...   
+In Editor Mode, the user must provide their sets in this format:    
+
+Set: element1~elementA  
+Set: element2~elementB  
+Set: element3~elementC
 
 The two sets are in parentheses and are separated by spaces (there can be as many 
 spaces as needed, but there must be at least one)  
