@@ -49,7 +49,7 @@ Example:
 The user is provided with a set of elements, and they must provide all elements in the 
 other set, separated by a ~.  
 
-Example (Program Provided (Boy, Girl)):  
+Example (Program Provided "(Boy, Girl): "):  
 (Boy,Girl): (Male,Female)  
 
 In Editor Mode, the user must provide their sets in this format:    
@@ -61,8 +61,7 @@ Set: element3~elementC
 The two sets are in parentheses and are separated by spaces (there can be as many 
 spaces as needed, but there must be at least one)  
 
-When they are finished, they should type "MATCHED". This will take them back to the first 
-page in Editor Mode.  
+When finished, type a string for the prompt of the question without using a ~.  
 Empty sets and single element sets are accepted.
 
 ### Sequence

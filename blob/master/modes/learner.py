@@ -1,6 +1,8 @@
 import copy
 import random
+import sys
 import time
+from collections import Counter
 
 from blob.master.modes.editor import ReturnToBeginning
 
@@ -78,6 +80,8 @@ def learner_mode(copied_data):
                 else:
                     user_is_correct = False
                     points_earned = 0
+
+                correct_answer = correct_answer.upper()
             elif current_question[-1] == "SDR":
                 points_earned = 0
                 num_of_correct_answers = current_question[-2]
@@ -110,16 +114,77 @@ def learner_mode(copied_data):
                 if len(answers) < len(correct_answers_list):
                     user_is_correct = False
 
-                correct_answer = correct_answer[:-1]
+                correct_answer = correct_answer[:-1].upper()
                 if points_earned > point_should_cap and point_should_cap:
                     points_earned = current_question[-3]
             elif current_question[-1] == "M":
                 points_earned = 0
+                longest_string_length = 0
+                shortest_string_length = sys.maxsize
+                max_char_per_line = 60
+                elements_list = current_question[:-2]
+                prompt = current_question[-2]
+                points_possible = len(elements_list)
+                unpacked_list = list(set([element for sublist in elements_list for sub_sub_list in sublist for element in sub_sub_list]))
+                random.shuffle(elements_list)
+                random.shuffle(unpacked_list)
+                correct_answer = "Placeholder for matching"
+
+                for element in unpacked_list:
+                    if len(element) > longest_string_length:
+                        longest_string_length = len(element)
+                    if len(element) < shortest_string_length:
+                        shortest_string_length = len(element)
+
+                for element in elements_list:
+                    random.shuffle(element)
+
+                all_elements_string = ""
+                temp_string_holder = ""
+
+                for i in range(len(unpacked_list)):
+                    if not unpacked_list[i]:
+                        continue
+                    elif len(temp_string_holder + unpacked_list[i]) % max_char_per_line + 3 >= max_char_per_line - longest_string_length\
+                            or i == len(unpacked_list) - 1:
+                        all_elements_string += temp_string_holder + unpacked_list[i] + "\n"
+                        temp_string_holder = ""
+                    else:
+                        temp_string_holder += unpacked_list[i] + " | "
+
+                for i in range(len(elements_list)):
+                    if elements_list[i][0] == ['']:
+                        index_chosen = 1
+                        print(f"Blank problem solved!")
+                    else:
+                        print(f"Check if it is a blank: {elements_list[i][0]}")
+                        index_chosen = 0
+
+                    print(f"\nElements:\n"
+                          f"{all_elements_string}")
+
+                    print(f"{prompt}")
+                    user_answer = input(f"({','.join(elements_list[i][index_chosen])}): ").split(",")
+                    print()
+
+                    if (index_chosen == 1 or index_chosen == 0) and Counter(user_answer) == Counter(elements_list[i][index_chosen ^ 1]):
+                        points_earned += 1
+                        print(f"Correct!")
+                    else:
+                        user_is_correct = False
+                        print(f"Incorrect")
 
             if user_is_correct:
                 print(f"Correct!\n")
             else:
-                print(f"Incorrect. The answer is {correct_answer.upper()}.\n")
+                if current_question[-1] == "MC" or current_question[-1] == "SDR":
+                    print(f"Incorrect. The answer is {correct_answer}.\n")
+                elif current_question[-1] == "M":
+                    print(f"Correct answers: ")
+
+                    for element in current_question[:-2]:
+                        print(f"({', '.join(element[0])} ⇔ {', '.join(element[1])})")
+                    print()
 
             score += points_earned
             total_points += points_possible

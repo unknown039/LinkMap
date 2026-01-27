@@ -226,8 +226,9 @@ def editor_mode(data, end):
                     while True:
                         element_set = input(f"Sets: ").split("~")
 
-                        if element_set[0].lower() == "matched":
-                            quiz_questions_dictionary[current_question_number] = quiz_questions_dictionary[current_question_number] + ["M"]
+                        if len(element_set) == 1:
+                            quiz_questions_dictionary[current_question_number].append(element_set[0])
+                            quiz_questions_dictionary[current_question_number] = (quiz_questions_dictionary[current_question_number] + ["M"])
                             break
                         elif len(element_set) == 2:
                             quiz_questions_dictionary[current_question_number].append([element_set[0].split(","), element_set[1].split(",")])
