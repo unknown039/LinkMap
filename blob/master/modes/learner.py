@@ -4,6 +4,8 @@ import sys
 import time
 from collections import Counter
 
+from lcs2 import lcs_length
+
 from blob.master.modes.editor import ReturnToBeginning
 
 def learner_mode(copied_data):
@@ -139,25 +141,12 @@ def learner_mode(copied_data):
                 for element in elements_list:
                     random.shuffle(element)
 
-                all_elements_string = ""
-                temp_string_holder = ""
-
-                for i in range(len(unpacked_list)):
-                    if not unpacked_list[i]:
-                        continue
-                    elif len(temp_string_holder + unpacked_list[i]) % max_char_per_line + 3 >= max_char_per_line - longest_string_length\
-                            or i == len(unpacked_list) - 1:
-                        all_elements_string += temp_string_holder + unpacked_list[i] + "\n"
-                        temp_string_holder = ""
-                    else:
-                        temp_string_holder += unpacked_list[i] + " | "
+                all_elements_string = join_and_wrap_lines(unpacked_list, " | ", max_char_per_line)
 
                 for i in range(len(elements_list)):
                     if elements_list[i][0] == ['']:
                         index_chosen = 1
-                        print(f"Blank problem solved!")
                     else:
-                        print(f"Check if it is a blank: {elements_list[i][0]}")
                         index_chosen = 0
 
                     print(f"\nElements:\n"
@@ -173,6 +162,39 @@ def learner_mode(copied_data):
                     else:
                         user_is_correct = False
                         print(f"Incorrect")
+            elif current_question[-1] == "S":
+                correct_sequence = current_question[2:-1]
+                shuffled_list = random.sample(correct_sequence, len(correct_sequence))
+                # NOTE: this shuffle and copy the list
+                prompt = current_question[0]
+                partial_credit = current_question[1] == "Y"
+                user_answers = list()
+
+                for i in range(len(correct_sequence)):
+                    if i == 0:
+                        print(f"Elements:\n"
+                              f"{join_and_wrap_lines(shuffled_list, " | ")}")
+                    else:
+                        print(f"-----------------------------------------------------\n\n"
+                              f"Elements:\n"
+                              f"{join_and_wrap_lines(shuffled_list, " | ")}")
+
+                    print(f"{prompt}")
+                    user_answers.append(input(f"{i + 1}. "))
+                    print()
+
+                if partial_credit:
+                    points_earned = 0 if lcs_length(correct_sequence, user_answers) == 1 else lcs_length(correct_sequence, user_answers)
+                    points_possible = len(correct_sequence)
+                elif user_answers == correct_sequence:
+                    points_earned = 1
+                    points_possible = 1
+                else:
+                    points_earned = 0
+                    points_possible = 1
+
+                user_is_correct = points_earned == points_possible
+
 
             if user_is_correct:
                 print(f"Correct!\n")
@@ -212,3 +234,25 @@ def keyword_checker(response, score=-1):
         print("Score:", score)
     elif response == "stop" and score == -1:
         end_learning()
+
+def join_and_wrap_lines(list_of_strings, delimiter, max_char_per_line=60):
+    all_elements_string = ""
+    temp_string_holder = ""
+    longest_string_length = 0
+
+    for string in list_of_strings:
+        if len(string) > longest_string_length:
+            longest_string_length = len(string)
+
+    for i in range(len(list_of_strings)):
+        if not list_of_strings[i]:
+            continue
+        elif len(temp_string_holder + list_of_strings[
+            i]) % max_char_per_line + 3 >= max_char_per_line - longest_string_length \
+                or i == len(list_of_strings) - 1:
+            all_elements_string += temp_string_holder + list_of_strings[i] + "\n"
+            temp_string_holder = ""
+        else:
+            temp_string_holder += list_of_strings[i] + delimiter
+
+    return all_elements_string

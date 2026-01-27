@@ -72,6 +72,9 @@ In Editor Mode, enter the elements one at a time in the correct order. To finish
 nothing.
 
 Example:  
+
+Prompt: You can leave this empty     
+Allow Partial Credit (Y/N): Y   
 Element 1: This  
 Element 2: is   
 Element 3: an   

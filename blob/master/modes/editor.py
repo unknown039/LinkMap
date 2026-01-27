@@ -237,6 +237,18 @@ def editor_mode(data, end):
                 elif last_type_of_assessment_item == "s":
                     quiz_questions_dictionary[current_question_number] = []
                     element_number = 0
+                    quiz_questions_dictionary[current_question_number].append(input("Prompt: "))
+
+                    while True:
+                        allow_partial_credit = input(f"Allow partial credit (Y/N): ").strip().lower()
+                        if allow_partial_credit == "y":
+                            quiz_questions_dictionary[current_question_number].append("Y")
+                            break
+                        elif allow_partial_credit == "n":
+                            quiz_questions_dictionary[current_question_number].append("N")
+                            break
+                        else:
+                            print(f"Enter Y or N")
 
                     while True:
                         element_number += 1
