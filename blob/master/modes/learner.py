@@ -194,6 +194,37 @@ def learner_mode(copied_data):
                     points_possible = 1
 
                 user_is_correct = points_earned == points_possible
+            elif current_question[-1] == "SC":
+                # FIXME: Number of questions is wrong
+                points_earned = 0
+                correct_set = current_question[2:-1]
+                shuffled_list = random.sample(correct_set, len(correct_set))
+                prompt = current_question[0]
+                allow_partial_credit = current_question[1] == "Y"
+
+                print(f"{prompt}\n")
+                for question_set in shuffled_list:
+                    random.shuffle(question_set)
+                    correct_set = question_set[1:]
+                    points_possible += len(correct_set)
+
+                    answer_set = input(f"{question_set[0]}: ").split(",")
+
+                    subpoints = 0
+
+                    for i in range(len(correct_set)):
+                        for a in range(len(correct_set)):
+                            if len(answer_set) - 1 < a:
+                                break
+
+                            if correct_set[i] == answer_set[a]:
+                                subpoints += 1
+
+                    if not allow_partial_credit and not subpoints == len(correct_set):
+                        subpoints = 0
+                        print(f"Subpoints is zero")
+
+                    points_earned += subpoints
 
 
             if user_is_correct:

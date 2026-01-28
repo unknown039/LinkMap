@@ -85,12 +85,31 @@ Saved sequence: ("this", "is", "an", "example")
 
 ### Set Completion
 The user is provided with an element of a set, and they provide all other elements of the
-set.
+set.  
+
+**IMPORTANT:** If the user enters more elements than needed to complete 
+the set, the extra elements will be ignored when scoring.  
+Partial credit 
+
+Example:
+
+Prompt goes here
+
+1: Hydrogen,H  
+He: Helium,2
+Lithium: 3,6.94,Li
+
+In the example above, the Hydrogen and Helium sets are correct. The 
+Lithium set is either incorrect or have partial credit because the "Li" 
+is ignored IF 6.94 was not part of the answer and the set only had 3 members
 
 In Editor Mode, separates the element in the set by a comma. Enter nothing to finish. The
 amount of elements within each set can vary
 
-Example:   
+Example:
+
+Prompt: This could be blank
+Allow partial credit (Y/N): Y
 Set 1: Hydrogen,1  
 Set 2: Helium,2,He,4.0026  
 Set 3: Lithium,3,Li  
@@ -111,3 +130,6 @@ enter.
 - **STOP** would end the program immediately and show your score (if there is one).
 - **BACK** would take you back to the beginning page (a.k.a. the one that asks what
 would you like to do).  
+
+
+- [ ] TODO: Fix up the README.md file

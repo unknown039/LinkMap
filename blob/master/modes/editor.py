@@ -27,7 +27,7 @@ def editor_mode(data, end):
                 else:
                     keywords_checker(subject)
 
-                    if subject_level == "c" and not data[subject]:
+                    if subject_level == "c" and subject not in data:
                         data[subject] = {}
                         subject_is_chosen = True
                     elif subject_level == "c" and data[subject]:
@@ -67,8 +67,9 @@ def editor_mode(data, end):
                     return
                 else:
                     keywords_checker(quiz)
+                    # TODO: Make sure all conditions are expected
 
-                    if quiz_level == "c" and data[subject][quiz]:
+                    if quiz_level == "c" and quiz in data[subject]:
                         print(f"\nThere is already a quiz under this name.")
 
                         while True:
@@ -101,7 +102,8 @@ def editor_mode(data, end):
                                 break
                             else:
                                 continue
-
+                    elif quiz_level == "c" and quiz not in data[subject]:
+                        data[subject][quiz] = {}
 
                 if different_quiz_edit:
                     different_quiz_edit = False
@@ -239,16 +241,10 @@ def editor_mode(data, end):
                     element_number = 0
                     quiz_questions_dictionary[current_question_number].append(input("Prompt: "))
 
-                    while True:
-                        allow_partial_credit = input(f"Allow partial credit (Y/N): ").strip().lower()
-                        if allow_partial_credit == "y":
-                            quiz_questions_dictionary[current_question_number].append("Y")
-                            break
-                        elif allow_partial_credit == "n":
-                            quiz_questions_dictionary[current_question_number].append("N")
-                            break
-                        else:
-                            print(f"Enter Y or N")
+                    if want_partial_credit():
+                        quiz_questions_dictionary[current_question_number].append("Y")
+                    else:
+                        quiz_questions_dictionary[current_question_number].append("N")
 
                     while True:
                         element_number += 1
@@ -260,8 +256,17 @@ def editor_mode(data, end):
                         else:
                             quiz_questions_dictionary[current_question_number].append(element)
                 elif last_type_of_assessment_item == "sc":
+                    # TODO: Add prompts to every set
+                    # TODO: Warn about Duplicates
+
                     quiz_questions_dictionary[current_question_number] = []
                     set_number = 0
+                    quiz_questions_dictionary[current_question_number].append(input("Prompt: "))
+
+                    if want_partial_credit():
+                        quiz_questions_dictionary[current_question_number].append("Y")
+                    else:
+                        quiz_questions_dictionary[current_question_number].append("N")
 
                     while True:
                         set_number += 1
@@ -284,3 +289,13 @@ def keywords_checker(response):
         raise ReturnToBeginning
     elif response == 'stop':
         end_learning()
+
+def want_partial_credit():
+    while True:
+        allow_partial_credit = input(f"Allow partial credit (Y/N): ").strip().lower()
+        if allow_partial_credit == "y":
+            return True
+        elif allow_partial_credit == "n":
+            return False
+        else:
+            print(f"Enter Y or N")

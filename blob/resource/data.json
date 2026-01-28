@@ -1,14 +1,28 @@
 {
     "math": {
-        "algebra": {
-            "2": [
-                "Test prompt",
-                "N",
-                "1",
-                "2",
-                "3",
-                "4",
-                "S"
+        "algebra": {}
+    },
+    "chemistry": {
+        "elements": {
+            "1": [
+                "Each set consists of the symbol, name, and atomic number",
+                "Y",
+                [
+                    "1",
+                    "H",
+                    "Hydrogen"
+                ],
+                [
+                    "2",
+                    "He",
+                    "Helium"
+                ],
+                [
+                    "3",
+                    "Li",
+                    "Lithium"
+                ],
+                "SC"
             ]
         }
     }
