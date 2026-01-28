@@ -1,12 +1,31 @@
-# Editor Mode
+# LinkMap
+
+---
+
+LinkMap is a personal project that aims to emulate many different types of 
+educational measurements using only text that are allowed within the terminal.  
+
+It allows users to customize their quizzes and evaluate them according to 
+their needs and study their own quizzes.  
+
+Currently, LinkMap have **two** modes and a system:  
+
+1. **Editor Mode**
+2. **Learner Mode**
+3. **Scoring System**
+
+---
+
+## 1. Editor Mode
 
 ### LinkMap Keywords in Editor Mode:
 - **FINISHED** at any moment to save your changes. 
 - **STOP** would end the program and discard your changes.
-- **BACK** would take you back to the beginning page (a.k.a. the one that asks what
-would you like to do) and discard your changes.  
+- **BACK** would take you back to the beginning page (a.k.a. the one that asks
+what would you like to do) and discard your changes.  
   
-These keywords work everywhere except the prompt for questions and answers.
+These keywords function everywhere except when the program prompts for 
+questions and answers.
 
 ### LinkMap currently supports 6 assessment item types:
 - Multiple Choice
@@ -16,121 +35,141 @@ These keywords work everywhere except the prompt for questions and answers.
 - Set completion
 - Short Response
 
+---
+
 ### Multiple Choice
-The user is provided with a question and a list of answers.
-User select ONE answer as the correct answer.
 
-In editor mode, separate the answers using commas with the first one being correct.
+- Enter the question 
+- Enter the list of answers
+  - ***The first answer in the list will be chosen as the correct answer.***
 
-Example:  
-"answer1,answer2,answer3,answer4,answer5" - answer1 is the correct answer
+**Example:**  
+>Question: Which of the following is prime?  
+>Answers: 2,6,4,9
+
+In the example above, "2" will be chosen as the correct answer.
+
+---
 
 ### Selected-Response
 
-the user is provided with a question a list of answers. User select multiple 
-answers as correct answers in the same format as entering them in the editor.
+- Enter the amount of correct answers (zero is a valid option)
+- Set your Score Cap with errors
+  - If the learner choose an incorrect answer, their score cannot go above 
+  the score cap
+  - Enter nothing if a score cap is unwanted - NOT recommended as the user 
+  can pick all answers to always gain full credit
+- Enter the question
+- Enter the answers separated by a comma
+  - Using the amount of correct answers, the program will mark the first 
+  answers as correct. 
 
-In editor mode, the program will ask how many correct answers there are, n (zero is a 
-valid option). Next, set your Score Cap with errors. This means that if the learner 
-select an incorrect answer, then **their score cannot go above the Score Cap. Enter nothing
-if there is no score cap (not recommended).  
+**Example 1:**  
 
-Then, the program will prompt for the answers. It will pick
-the first n answers as the correct one. If you use the keyword "FINISHED" during this 
-time, the program will discard information about the number of correct answers.
+> How many answers are there? 3  
+> Score Cap with Error(s): 2  
+> Question: Which of the following are prime?  
+> Answers: 2,3,5,9  
 
-Example:  
-"How many answers are there? 3"  
-"answer1,answer2,answer3,answer4,answer5" - answer1, answer2, and answer3 are the correct answers
+In the example above, the correct answers will be 2,3, and 5. If the 
+learner pick number 9, regardless of their other options, they cannot gain 
+more than 2 points.
+  
+**Example 2:**
 
+> How many answers are there? 2  
+> Score Cap with Error(s):   
+> Question: Which of the following are prime?  
+> Answers: 2,5,1,9  
+
+In the example above, the correct answers will be 2 and 5. If the learner
+pick any wrong answers, there score will be not be capped, so they have the
+option to pick every answer to guarantee full credit.
+
+---
 
 ### Matching
 
-The user is provided with a set of elements, and they must provide all elements in the 
-other set, separated by a ~.  
+- Enter two sets separated by a "~"
+- Within each set, each element is separated by a comma
+- To finish, enter nothing
 
-Example (Program Provided "(Boy, Girl): "):  
-(Boy,Girl): (Male,Female)  
+*Empty sets are accepted*
 
-In Editor Mode, the user must provide their sets in this format:    
+**IMPORTANT:**   
+Each "sets" prompt is for a SINGLE match. The program will only assume that
+the two sets match with each other and nothing else.
 
-Set: element1~elementA  
-Set: element2~elementB  
-Set: element3~elementC
+**Example 1:**
+> Sets: Story,Literature~Math,Algebra  
+> Sets: Art,Painting~Science   
+> Sets: History,culture~  
+> Sets:
 
-The two sets are in parentheses and are separated by spaces (there can be as many 
-spaces as needed, but there must be at least one)  
+In the example above, the set (Story, Literature) will be matched with the set
+(Math, Algebra); (Art,Painting) will be matched with (Science); and (History,
+culture) will be matched with nothing.   
 
-When finished, type a string for the prompt of the question without using a ~.  
-Empty sets and single element sets are accepted.
+*See scoring system for more information*
+
+---
 
 ### Sequence
-The user is provided with a set of elements that must rearranged in the correct order. To 
-complete the task, they will enter the elements in the same format in the editor. 
 
-In Editor Mode, enter the elements one at a time in the correct order. To finish, enter 
-nothing.
+- Enter the prompt
+- Decide if partial credits are allowed
+- Enter the elements in sequence
+- Enter nothing to finish
 
-Example:  
+**Example 1:**
 
-Prompt: You can leave this empty     
-Allow Partial Credit (Y/N): Y   
-Element 1: This  
-Element 2: is   
-Element 3: an   
-Element 4: example  
-Element 5:   
+> Prompt: Sort the numbers from least to greatest  
+> Allow partial credit (Y/N): Y  
+> Element 1: 1  
+> Element 2: 2  
+> Element 3: 3  
+> Element 4:
 
-Saved sequence: ("this", "is", "an", "example")  
+In the example above, the correct answer will be saved as (1, 2, 3).
+
+---
 
 ### Set Completion
-The user is provided with an element of a set, and they provide all other elements of the
-set.  
 
-**IMPORTANT:** If the user enters more elements than needed to complete 
-the set, the extra elements will be ignored when scoring.  
-Partial credit 
+- Enter a prompt
+- Decide if partial credit is allowed
+- Enter each set with elements separated by a comma
+- Enter nothing to finish
 
-Example:
+**Example:**
 
-Prompt goes here
+> Prompt: Each set have a symbol, atomic number, and element name  
+> Allow partial credit (Y/N): Y  
+> Set 1: H,1,Hydrogen  
+> Set 2: He,2,Helium  
+> Set 3: Li,3,Lithium  
+> Set 4: 
 
-1: Hydrogen,H  
-He: Helium,2
-Lithium: 3,6.94,Li
+In the example above, 3 sets are stored: (H, 1, Hydrogen), (He, 2, Helium),
+(Li, 3, Lithium).
 
-In the example above, the Hydrogen and Helium sets are correct. The 
-Lithium set is either incorrect or have partial credit because the "Li" 
-is ignored IF 6.94 was not part of the answer and the set only had 3 members
-
-In Editor Mode, separates the element in the set by a comma. Enter nothing to finish. The
-amount of elements within each set can vary
-
-Example:
-
-Prompt: This could be blank
-Allow partial credit (Y/N): Y
-Set 1: Hydrogen,1  
-Set 2: Helium,2,He,4.0026  
-Set 3: Lithium,3,Li  
-Set 4:  
-
-Stored set of sets: [(Hydrogen,1), (Helium,2,He,4.0026), (Lithium,3,Li)]  
+---
 
 ### Short Response
-The user is provided with a question, and they must provide the answer  
 
-In Editor Mode, simply enter the question, hit enter, then enter the answer, and hit 
-enter. It is highly recommended to enter a number as the max score for partial credit, 
-but you could also enter nothing, and the program will default to scoring as one.
+- Enter the question
+- Enter the answer
+- Enter the max amount of points (how many points the question is worth)
 
+**Example:**
+
+> Question: Explain the difference between a natural number and an integer.  
+> Answer: A natural number is all positive whole numbers starting from 1. 
+> An integer is all whole numbers that can be negative, positive, or zero.
+
+---
 
 # Learner Mode
 
-### LinkMap Keywords in Editor Mode:
-- **STOP** would end the program immediately and show your score (if there is one).
-- **BACK** would take you back to the beginning page (a.k.a. the one that asks what
-would you like to do).  
 
 
-- [ ] TODO: Fix up the README.md file

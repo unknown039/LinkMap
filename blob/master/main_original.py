@@ -1,4 +1,4 @@
-"""
+
 import random
 import time
 
@@ -278,3 +278,4 @@ if __name__ == "__main__":
     print("Welcome to the Polymers Quiz!")
     print("Type 'STOP' anytime to quit.\n")
     start_quiz()
+"""
