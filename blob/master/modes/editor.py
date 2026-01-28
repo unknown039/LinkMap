@@ -94,11 +94,11 @@ def editor_mode(data, end):
 
                             if quiz_choice == "finished" or quiz_choice == "back" or quiz_choice == "stop":
                                 print("Keywords are not allowed right now. Please pick (C/M)\n")
-                            elif quiz_choice == "m":
-                                different_quiz_edit = True
-                                break
                             elif quiz_choice == "e":
                                 different_quiz_edit = True
+                                break
+                            elif quiz_choice == "m":
+                                different_quiz_edit = False
                                 break
                             else:
                                 continue
@@ -278,7 +278,10 @@ def editor_mode(data, end):
                         else:
                             quiz_questions_dictionary[current_question_number].append(set_of_elements)
                 elif last_type_of_assessment_item == "sr":
-                    quiz_questions_dictionary[current_question_number] = [input(f"Question: "), input(f"Answer: "), "SR"]
+                    quiz_questions_dictionary[current_question_number] = [input(f"Question: "),
+                                                                          input(f"Answer: "),
+                                                                          input(f"Max Points: "),
+                                                                          "SR"]
 
 def keywords_checker(response):
     from .. main import end_learning

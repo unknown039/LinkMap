@@ -1,8 +1,11 @@
 import copy
+import os
 import random
 import sys
 import time
 from collections import Counter
+from sentence_transformers import util
+from contextlib import redirect_stdout, redirect_stderr
 
 from lcs2 import lcs_length
 
@@ -225,8 +228,29 @@ def learner_mode(copied_data):
                         print(f"Subpoints is zero")
 
                     points_earned += subpoints
+            elif current_question[-1] == "SR":
+                answer = input(f"{current_question[0]}\n")
 
+                if not current_question[-2]:
+                    points_possible = 1
+                    points_earned = int(answer == current_question[1])
 
+                    if points_earned == 1:
+                        user_is_correct = True
+                else:
+                    points_possible = int(current_question[-2])
+                    # NOTE: Errors are silenced from the transformer model!
+                    model = load_model_silently("all-MiniLM-L6-v2")
+
+                    emb_answer = model.encode(answer, convert_to_tensor=True)
+                    emb_correct = model.encode(current_question[1], convert_to_tensor=True)
+
+                    correctness = util.cos_sim(emb_answer, emb_correct).item()
+                    points_earned = round(max(0, correctness * int(current_question[-2])))
+
+                    user_is_correct = correctness >= 0.6
+
+            # TODO: Add correctness for all other modes
             if user_is_correct:
                 print(f"Correct!\n")
             else:
@@ -287,3 +311,9 @@ def join_and_wrap_lines(list_of_strings, delimiter, max_char_per_line=60):
             temp_string_holder += list_of_strings[i] + delimiter
 
     return all_elements_string
+def load_model_silently(model_name="sentence-transformers/all-MiniLM-L6-v2"):
+    # redirect both stdout and stderr to devnull while loading
+    with open(os.devnull, "w") as devnull, redirect_stdout(devnull), redirect_stderr(devnull):
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer(model_name, local_files_only=True)  # local_files_only=True ensures no hub contact
+    return model

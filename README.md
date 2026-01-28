@@ -121,7 +121,8 @@ Stored set of sets: [(Hydrogen,1), (Helium,2,He,4.0026), (Lithium,3,Li)]
 The user is provided with a question, and they must provide the answer  
 
 In Editor Mode, simply enter the question, hit enter, then enter the answer, and hit 
-enter.  
+enter. It is highly recommended to enter a number as the max score for partial credit, 
+but you could also enter nothing, and the program will default to scoring as one.
 
 
 # Learner Mode

@@ -1,6 +1,19 @@
 {
     "math": {
-        "algebra": {}
+        "algebra": {
+            "1": [
+                "Test question",
+                "The quick brown fox jumps over the lazy dog.",
+                "",
+                "SR"
+            ],
+            "2": [
+                "sometimes I dream about cheese",
+                "Yeah, I cannot think of a funny sentence.",
+                "5",
+                "SR"
+            ]
+        }
     },
     "chemistry": {
         "elements": {
