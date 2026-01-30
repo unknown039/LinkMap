@@ -20,6 +20,8 @@ Start by typing choosing the desirable mode.
 assessment type*   
 *Access to the **Scoring System** is currently unsupported*
 
+&nbsp;
+
 ---
 
 ## 1. Editor Mode
@@ -186,6 +188,8 @@ In the example above, 3 sets are stored: (H, 1, Hydrogen), (He, 2, Helium),
 > Answer: A natural number is all positive whole numbers starting from 1. 
 > An integer is all whole numbers that can be negative, positive, or zero.
 
+&nbsp;
+
 ---
 
 # Learner Mode
@@ -339,6 +343,8 @@ The learner is provided with a prompt. Then, they answer it.
 > I wonder if I just put something really terrible here. Will literally 
 > anybody notice?  
 > Yeah, I think they will notice.  
+
+&nbsp;
 
 ---
 
