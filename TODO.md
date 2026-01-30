@@ -1,4 +1,4 @@
-2026 - 01 - 28
+(Started on 2026 - 01 - 28)
 
 - [ ] Rewrite the README.md file
 - [ ] Put all types of questions into a function
@@ -6,4 +6,19 @@
 - [ ] Warn about a set of one in Set Completion
 - [ ] Add no partial credit as an option to short response
 - [ ] Change the prompt from "Question:" to "Prompt: " in short response
+- [ ] Add keywords checker to the logic loop when 
+  - [ ] subject does not exist
+  - [ ] prompting create or modify a quiz
+  - [ ] prompting create or modify a subject
+- [ ] Add a prompting option to Matching in
+  - [ ] Editor mode
+  - [ ] Scoring in learner mode
+  - [ ] Do not use the prompt if it is empty
+  - [ ] Update README.md accordingly
+- [ ] Remake answer evaluation in short response (in learner mode)
+- [ ] Remove the extra space between the provided set and list of all elements in Matching
+- [ ] Fix number of questions being wrong
+  - [ ] In matching
+- [ ] Fix Set completion in Learner mode
+- [ ] Add "Correct" messages to all other questions
 - [ ] Fix any errors found

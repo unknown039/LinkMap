@@ -12,7 +12,13 @@ Currently, LinkMap have **two** modes and a system:
 
 1. **Editor Mode**
 2. **Learner Mode**
-3. **Scoring System**
+3. **Scoring System**  
+
+Start by typing choosing the desirable mode. 
+
+*The Scoring System section will include explanations on exactly what is each
+assessment type*   
+*Access to the **Scoring System** is currently unsupported*
 
 ---
 
@@ -24,8 +30,21 @@ Currently, LinkMap have **two** modes and a system:
 - **BACK** would take you back to the beginning page (a.k.a. the one that asks
 what would you like to do) and discard your changes.  
   
-These keywords function everywhere except when the program prompts for 
-questions and answers.
+These keywords function everywhere in Editor Mode except when the program 
+prompts for questions and answers.  
+
+*They do not work in learner mode*
+
+### Structure
+ 
+Follow the instructions and answer the questions provided by the prompts. If 
+there is a conflict (e.g. modifying a subject that does not exist), the 
+program will prompt for a different response.  
+
+After a valid pair of subject and quiz are selected, choose an assessment
+type to add to the quiz.  
+
+#### USE THE CAPITAL LETTERS IN THE LEFT WHEN CHOOSING THE TYPE
 
 ### LinkMap currently supports 6 assessment item types:
 - Multiple Choice
@@ -37,7 +56,7 @@ questions and answers.
 
 ---
 
-### Multiple Choice
+### Multiple Choice  
 
 - Enter the question 
 - Enter the list of answers
@@ -171,5 +190,155 @@ In the example above, 3 sets are stored: (H, 1, Hydrogen), (He, 2, Helium),
 
 # Learner Mode
 
+Start by choosing an exiting subject and quiz pair. Then, the learner can 
+answer the questions that are selected from the quiz in a specific format.  
 
+The format the learner should abide for each assessment type is provided
+below.  
+
+---
+
+### Multiple Choice  
+
+After reading the prompt and considering the options, the learner should 
+pick the correct **CAPITAL LETTER** that corresponds with the answer.
+
+**Example:** 
+> Q1/1 (test quiz) | Score: 0 | Elapsed: 0.0s  
+> Which of the following are primes?  
+> A. 2  
+> B. 9  
+> C. 8  
+> D. 4
+>  
+> Answer: A  
+> Correct!  
+
+---
+
+### Selected-Response  
+
+After reading the prompt and considering the options, the learner should 
+pick the correct **CAPITAL LETTERS** that corresponds with the answer,
+separated by a comma.
+
+**Example:** 
+> Q1/1 (test quiz) | Score: 0 | Elapsed: 0.0s  
+> Which of the following are primes?  
+> A. 2  
+> B. 9  
+> C. 8  
+> D. 5  
+> E. 6
+>  
+> Answer: A,D  
+> Correct!  
+
+---
+
+### Matching
+
+The learner is provided with a list of elements. Then, the learner is 
+provided by a set of elements, and they choose all the elements from the list
+that matches with the provided set separated by a comma.
+
+**Example 1:**  
+
+> Q1/1 (test quiz) | Score: 0 | Elapsed: 0.0s  
+> Lithium | He | Helium | Li | 1 | 2 | 3 | Hydrogen | H  
+>   
+> (Hydrogen): H,1  
+>   
+> Correct!  
+
+It is possible for a set to be matched with nothing.  
+
+**Example 2:**
+
+> Lithium | He | Helium | Li | 1 | 2 | 3 | Hydrogen | H | Iron  
+>   
+> (Iron): 
+>   
+> Correct!  
+
+---
+
+### Sequence
+
+The learner is provided with a list of all the elements to be sorted into 
+sequence one at a time.  
+
+**Example:**
+
+> Q1/1 (test quiz) | Score: 0 | Elapsed: 0.0s  
+> Elements:  
+> 1 | 5 | 2 | 4 | 3  
+> 
+> Test sequence prompt    
+> 1\. 1  
+> 
+> \-----------------------------------------------------
+> 
+> Elements:  
+> 1 | 5 | 2 | 4 | 3  
+> 
+> Test sequence prompt  
+> 2\. 2  
+> 
+> \-----------------------------------------------------
+> 
+> Elements:  
+> 1 | 5 | 2 | 4 | 3  
+> 
+> Test sequence prompt  
+> 3\. 3 
+> 
+> \-----------------------------------------------------
+> 
+> Elements:
+> 1 | 5 | 2 | 4 | 3  
+> 
+> Test sequence prompt  
+> 4\. 4
+> 
+> \-----------------------------------------------------
+> 
+> Elements:  
+> 1 | 5 | 2 | 4 | 3
+> 
+> Test sequence prompt  
+> 5\. 5
+> 
+> Correct! 
+
+---  
+
+### Set Completion
+
+The learner is provided with one member of the set, then the user provide
+all the other elements.  
+
+**Example:**
+
+> Q1/1 (test quiz) | Score: 0 | Elapsed: 0.0s  
+> Each set contains the atomic number, atomic symbol, and element name  
+> 
+> Hydrogen: H,1  
+> He: Helium,2  
+> 3: Li,Lithium  
+
+---  
+
+### Short Response  
+
+The learner is provided with a prompt. Then, they answer it.  
+
+**Example:**
+
+> Q1/1 (test quiz) | Score: 0 | Elapsed: 0.0s  
+> I wonder if I just put something really terrible here. Will literally 
+> anybody notice?  
+> Yeah, I think they will notice.  
+
+---
 

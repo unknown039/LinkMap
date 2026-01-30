@@ -117,7 +117,7 @@ def editor_mode(data, end):
             last_type_of_assessment_item = None
             quiz_questions_dictionary = data[subject][quiz]
             current_question_number = len(data[subject][quiz])
-            print(f"# of Q in quiz: {current_question_number}")
+            print(f"Number of questions in quiz: {current_question_number}")
 
             while True:
                 current_question_number += 1
