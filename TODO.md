@@ -1,7 +1,8 @@
 (Started on 2026 - 01 - 28)
 
-- [ ] Rewrite the README.md file
 - [ ] Put all types of questions into a function
+  - [ ] Editor
+  - [ ] Learner
 - [ ] Fix Selected-Response score cap
 - [ ] Warn about a set of one in Set Completion
 - [ ] Add no partial credit as an option to short response
@@ -14,11 +15,10 @@
   - [ ] Editor mode
   - [ ] Scoring in learner mode
   - [ ] Do not use the prompt if it is empty
-  - [ ] Update README.md accordingly
 - [ ] Remake answer evaluation in short response (in learner mode)
 - [ ] Remove the extra space between the provided set and list of all elements in Matching
-- [ ] Fix number of questions being wrong
-  - [ ] In matching
+- [ ] Fix number of questions being wrong in matching
 - [ ] Fix Set completion in Learner mode
 - [ ] Add "Correct" messages to all other questions
+- [ ] Rewrite the README.md file
 - [ ] Fix any errors found
