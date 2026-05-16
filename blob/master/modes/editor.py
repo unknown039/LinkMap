@@ -1,6 +1,11 @@
 class ReturnToBeginning (Exception):
     pass
 
+class EditorMode:
+    def __init__(self, data, end):
+        self.data = data
+        self.end = end
+
 def editor_mode(data, end):
         while True:
             subject_level = input("Create subject or modify existing subject (C/M): ").lower().strip()
