@@ -5,6 +5,45 @@ class EditorMode:
     def __init__(self, data, end):
         self.data = data
         self.end = end
+        self.subject = None
+        self.quiz = None
+        self.quiz_questions_dictionary = None
+
+    def editor_mode_test(self):
+        while True:
+            is_new_subject = input("Create subject or modify existing subject (C/M): ").lower().strip()
+            keywords_checker(is_new_subject)
+
+            is_new_subject = is_new_subject == "c"
+
+            while True:
+                self.subject = input("Subject: ").lower().strip()
+
+                if not is_new_subject and self.subject not in self.data:
+                    print("Subject not found.\n")
+                    continue
+                elif is_new_subject and self.subject in self.data:
+                    print("Subject already exists.\n")
+                    continue
+                break
+
+
+
+    def keywords_checker(self, response):
+        from ..main import end_learning
+
+        response = str(response).strip().lower()
+
+        if response == 'finished':
+            if self.subject and self.quiz and self.quiz_questions_dictionary:
+                self.data[self.subject][self.quiz] = self.quiz_questions_dictionary
+            raise ReturnToBeginning()
+        elif response == 'back':
+            raise ReturnToBeginning()
+        elif response == 'stop':
+            end_learning()
+
+        return response
 
 def editor_mode(data, end):
         while True:
