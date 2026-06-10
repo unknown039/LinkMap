@@ -4,7 +4,7 @@ from pathlib import Path
 import blob.master.modes.learner as learner
 
 import blob.master.modes.editor as editor
-from blob.master.modes.editor import ReturnToBeginning
+from blob.master.modes.editor import ReturnToBeginning, EditorMode
 
 # top of your script — MUST run before importing transformers/torch/sentence_transformers
 import os
@@ -52,7 +52,8 @@ if __name__ == "__main__":
             print()
 
             if role == "e":
-                editor.editor_mode(data, end)
+                edit = EditorMode(data, end)
+                edit.editor_mode_test()
             elif role == "l":
                 learner.learner_mode(data)
             elif role == "stop":

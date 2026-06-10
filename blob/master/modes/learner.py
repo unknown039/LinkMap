@@ -4,7 +4,6 @@ import random
 import sys
 import time
 from collections import Counter
-from sentence_transformers import util
 from contextlib import redirect_stdout, redirect_stderr
 
 from lcs2 import lcs_length
@@ -229,6 +228,8 @@ def learner_mode(copied_data):
 
                     points_earned += subpoints
             elif current_question[-1] == "SR":
+                from sentence_transformers import util, SentenceTransformer
+
                 answer = input(f"{current_question[0]}\n")
 
                 if not current_question[-2]:

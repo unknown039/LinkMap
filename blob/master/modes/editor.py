@@ -11,23 +11,29 @@ class EditorMode:
 
     def editor_mode_test(self):
         while True:
-            is_new_subject = input("Create subject or modify existing subject (C/M): ").lower().strip()
-            keywords_checker(is_new_subject)
+            self.subject = self.get_subject()
 
-            is_new_subject = is_new_subject == "c"
+    def get_subject(self):
+        is_new_subject = input("Create subject or modify existing subject (C/M): ").lower().strip()
+        keywords_checker(is_new_subject)
 
-            while True:
-                self.subject = input("Subject: ").lower().strip()
+        is_new_subject = is_new_subject == "c"
 
-                if not is_new_subject and self.subject not in self.data:
-                    print("Subject not found.\n")
-                    continue
-                elif is_new_subject and self.subject in self.data:
-                    print("Subject already exists.\n")
-                    continue
-                break
+        while True:
+            subject = input("Subject: ").lower().strip()
 
-
+            if not is_new_subject and self.subject not in self.data:
+                print("Subject not found.\n")
+                if input("Do you want to return to the previous prompt? (Y/N): ").strip().lower() == "Y":
+                    return self.get_subject()
+                continue
+            elif is_new_subject and self.subject in self.data:
+                print("Subject already exists.\n")
+                if input("Do you want to return to the previous prompt? (Y/N): ").strip().lower() == "Y":
+                    return self.get_subject()
+                continue
+            break
+        return subject
 
     def keywords_checker(self, response):
         from ..main import end_learning
