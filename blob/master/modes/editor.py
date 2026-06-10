@@ -5,13 +5,43 @@ class EditorMode:
     def __init__(self, data, end):
         self.data = data
         self.end = end
-        self.subject = None
-        self.quiz = None
+        self.current_subject = None
+        self.current_quiz = None
         self.quiz_questions_dictionary = None
 
     def editor_mode_test(self):
         while True:
-            pass
+            self.current_subject = self.get_subject()
+            self.current_quiz = self.get_quiz()
+
+            print(f"{self.current_subject, self.current_quiz}")
+
+    def get_subject(self):
+        subject = input(f"Subject: ").strip().lower()
+        keywords_checker(subject)
+
+        if subject in self.data:
+            print(f"Modifying existing subject")
+        else:
+            print(f"Adding new subject")
+            self.data[subject] = {}
+
+        print()
+        return subject
+
+    def get_quiz(self):
+        quiz = input(f"Quiz: ").strip().lower()
+        keywords_checker(quiz)
+
+        # second boolean make sure the subject is not new/empty
+        if quiz in self.data[self.current_subject] and self.data[self.current_subject]:
+            print(f"Modifying existing quiz")
+        else:
+            print(f"Adding new quiz")
+            self.data[self.current_subject][quiz] = {}
+
+        print()
+        return quiz
 
     def keywords_checker(self, response):
         from ..main import end_learning
@@ -19,8 +49,8 @@ class EditorMode:
         response = str(response).strip().lower()
 
         if response == 'finished':
-            if self.subject and self.quiz and self.quiz_questions_dictionary:
-                self.data[self.subject][self.quiz] = self.quiz_questions_dictionary
+            if self.current_subject and self.current_quiz and self.quiz_questions_dictionary:
+                self.data[self.current_subject][self.current_quiz] = self.quiz_questions_dictionary
             raise ReturnToBeginning()
         elif response == 'back':
             raise ReturnToBeginning()
