@@ -1,3 +1,6 @@
+from pandas.core.dtypes.inference import is_number
+
+
 class ReturnToBeginning (Exception):
     pass
 
@@ -13,8 +16,26 @@ class EditorMode:
         while True:
             self.current_subject = self.get_subject()
             self.current_quiz = self.get_quiz()
+            self.quiz_questions_dictionary = self.data[self.current_subject][self.current_quiz]
 
-            print(f"{self.current_subject, self.current_quiz}")
+            print(f"There are currently {len(self.quiz_questions_dictionary)} quiz questions.")
+
+            while True:
+                question_modification = input(f"Enter a number or abbreviation to add or modify a question: ").strip().upper()
+                if question_modification.isdigit():
+                    if question_modification not in self.quiz_questions_dictionary:
+                        print(f"Question number does not exist.\n")
+                        print(f"{int(question_modification)}")
+                        continue
+                    self.modify_question()
+                else:
+                    self.add_question()
+
+    def modify_question(self):
+        print("modifying question")
+
+    def add_question(self):
+        print("adding new question")
 
     def get_subject(self):
         subject = input(f"Subject: ").strip().lower()
