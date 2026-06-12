@@ -1,8 +1,39 @@
-from pandas.core.dtypes.inference import is_number
+from dataclasses import dataclass, field
 
+@dataclass
+class MultipleChoice:
+    question: str = ""
+    correct_answer: str = ""
+    answers_list: list[str] = field(default_factory=list)
+
+@dataclass
+class ShortResponse:
+    question: str = ""
+    correct_answer: str = ""
 
 class ReturnToBeginning (Exception):
     pass
+
+
+def mc():
+    current_question = MultipleChoice()
+    current_question.question = input("Question: ")
+    print()
+    current_question.correct_answer = input("Correct Answer: ")
+    current_question.answers_list.append(current_question.correct_answer)
+
+    while True:
+        incorrect_answer = input("Incorrect Answer: ")
+
+        if not incorrect_answer:
+            break
+
+        current_question.answers_list.append(incorrect_answer)
+
+    return current_question
+
+def sr():
+    print(f"Adding sr\n")
 
 class EditorMode:
     def __init__(self, data, end):
@@ -21,21 +52,35 @@ class EditorMode:
             print(f"There are currently {len(self.quiz_questions_dictionary)} quiz questions.")
 
             while True:
-                question_modification = input(f"Enter a number or abbreviation to add or modify a question: ").strip().upper()
-                if question_modification.isdigit():
-                    if question_modification not in self.quiz_questions_dictionary:
-                        print(f"Question number does not exist.\n")
-                        print(f"{int(question_modification)}")
+                question_changes = self.check_and_prompt("Enter a number or abbreviation to add or modify a question: ")
+
+                if question_changes.isdigit():
+                    if question_changes not in self.quiz_questions_dictionary:
+                        print("Question number not found\n")
                         continue
-                    self.modify_question()
+                    print(f"Current question/answer:")
+                    print(self.quiz_questions_dictionary.get("question"))
+                    print(self.quiz_questions_dictionary.get("answers"))
+                    print()
+
+                    self.quiz_questions_dictionary[question_changes] = self.create_question()
                 else:
-                    self.add_question()
+                    self.quiz_questions_dictionary[str(len(self.current_quiz) + 1)] \
+                        = self.create_question(question_changes)
 
-    def modify_question(self):
-        print("modifying question")
+    def create_question(self, question_type=None):
+        if question_type is None:
+            question_type = self.check_and_prompt("Question Type: ")
 
-    def add_question(self):
-        print("adding new question")
+        match question_type:
+            case "MC":
+                print(f"Keywords are now disabled")
+                return mc()
+            case "SR":
+                print(f"Keywords are now disabled")
+                return sr()
+            case _:
+                return self.create_question()
 
     def get_subject(self):
         subject = input(f"Subject: ").strip().lower()
@@ -64,18 +109,18 @@ class EditorMode:
         print()
         return quiz
 
-    def keywords_checker(self, response):
+    def check_and_prompt(self, prompt):
         from ..main import end_learning
 
-        response = str(response).strip().lower()
+        response = input(prompt).strip().upper()
 
-        if response == 'finished':
+        if response == 'FINISHED':
             if self.current_subject and self.current_quiz and self.quiz_questions_dictionary:
                 self.data[self.current_subject][self.current_quiz] = self.quiz_questions_dictionary
             raise ReturnToBeginning()
-        elif response == 'back':
+        elif response == 'BACK':
             raise ReturnToBeginning()
-        elif response == 'stop':
+        elif response == 'STOP':
             end_learning()
 
         return response

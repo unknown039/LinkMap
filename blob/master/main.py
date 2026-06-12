@@ -29,15 +29,25 @@ logging.getLogger("torch").setLevel(logging.ERROR)
 
 
 data_file_path = Path(__file__).parent.parent/"resource"/"data.json"
+test_data_file_path = Path(__file__).parent.parent/"resource"/"test_data.json"
 
 with open(data_file_path, "r") as f:
     data = json.load(f)
 
+with open(test_data_file_path, "r") as f:
+    test_data = json.load(f)
+
 def end():
     print(json.dumps(data, indent=4))
     print("File is overwritten")
-    with open (data_file_path, "w") as f:
-        f.write(json.dumps(data, indent=4))
+    with open (data_file_path, "w") as f1:
+        f1.write(json.dumps(data, indent=4))
+
+    print(json.dumps(test_data, indent=4))
+    print("Test data is overwritten")
+    with open(test_data_file_path, "w") as f2:
+        f2.write(json.dumps(test_data, indent=4))
+
     raise SystemExit("Exiting LinkMap")
 
 def end_learning():
@@ -52,7 +62,7 @@ if __name__ == "__main__":
             print()
 
             if role == "e":
-                edit = EditorMode(data, end)
+                edit = EditorMode(test_data, end)
                 edit.editor_mode_test()
             elif role == "l":
                 learner.learner_mode(data)
