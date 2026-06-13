@@ -1,1 +1,10 @@
-{}
+{
+    "math": {
+        "algebra": {
+            "1": {
+                "question": "What is multiplication?",
+                "correct_answer": "Repeated addition"
+            }
+        }
+    }
+}

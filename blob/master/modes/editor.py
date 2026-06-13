@@ -1,4 +1,5 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
+
 
 @dataclass
 class MultipleChoice:
@@ -16,11 +17,10 @@ class ReturnToBeginning (Exception):
 
 
 def mc():
-    current_question = MultipleChoice()
-    current_question.question = input("Question: ")
-    print()
-    current_question.correct_answer = input("Correct Answer: ")
-    current_question.answers_list.append(current_question.correct_answer)
+    question = MultipleChoice()
+    question.question = input("Question: ")
+    question.correct_answer = input("Correct Answer: ")
+    question.answers_list.append(question.correct_answer)
 
     while True:
         incorrect_answer = input("Incorrect Answer: ")
@@ -28,28 +28,33 @@ def mc():
         if not incorrect_answer:
             break
 
-        current_question.answers_list.append(incorrect_answer)
+        question.answers_list.append(incorrect_answer)
 
-    return current_question
+    return question
 
 def sr():
-    print(f"Adding sr\n")
+    question = ShortResponse()
+    question.question = input("Question: ")
+    question.correct_answer = input("Correct Answer: ")
+
+    return question
 
 class EditorMode:
     def __init__(self, data, end):
         self.data = data
         self.end = end
-        self.current_subject = None
-        self.current_quiz = None
+        self.current_subject_name = None
+        self.current_quiz_name = None
         self.quiz_questions_dictionary = None
 
     def editor_mode_test(self):
         while True:
-            self.current_subject = self.get_subject()
-            self.current_quiz = self.get_quiz()
-            self.quiz_questions_dictionary = self.data[self.current_subject][self.current_quiz]
+            self.current_subject_name = self.get_subject()
+            self.current_quiz_name = self.get_quiz()
+            self.quiz_questions_dictionary = self.data[self.current_subject_name][self.current_quiz_name]
+            quiz_length = len(self.quiz_questions_dictionary)
 
-            print(f"There are currently {len(self.quiz_questions_dictionary)} quiz questions.")
+            print(f"There are currently {quiz_length} quiz questions.")
 
             while True:
                 question_changes = self.check_and_prompt("Enter a number or abbreviation to add or modify a question: ")
@@ -58,15 +63,9 @@ class EditorMode:
                     if question_changes not in self.quiz_questions_dictionary:
                         print("Question number not found\n")
                         continue
-                    print(f"Current question/answer:")
-                    print(self.quiz_questions_dictionary.get("question"))
-                    print(self.quiz_questions_dictionary.get("answers"))
-                    print()
-
                     self.quiz_questions_dictionary[question_changes] = self.create_question()
                 else:
-                    self.quiz_questions_dictionary[str(len(self.current_quiz) + 1)] \
-                        = self.create_question(question_changes)
+                    self.quiz_questions_dictionary[str(quiz_length + 1)] = self.create_question(question_changes)
 
     def create_question(self, question_type=None):
         if question_type is None:
@@ -74,10 +73,10 @@ class EditorMode:
 
         match question_type:
             case "MC":
-                print(f"Keywords are now disabled")
+                print(f"Keywords are now disabled\n")
                 return mc()
             case "SR":
-                print(f"Keywords are now disabled")
+                print(f"Keywords are now disabled\n")
                 return sr()
             case _:
                 return self.create_question()
@@ -100,11 +99,11 @@ class EditorMode:
         keywords_checker(quiz)
 
         # second boolean make sure the subject is not new/empty
-        if quiz in self.data[self.current_subject] and self.data[self.current_subject]:
+        if quiz in self.data[self.current_subject_name] and self.data[self.current_subject_name]:
             print(f"Modifying existing quiz")
         else:
             print(f"Adding new quiz")
-            self.data[self.current_subject][quiz] = {}
+            self.data[self.current_subject_name][quiz] = {}
 
         print()
         return quiz
@@ -115,8 +114,9 @@ class EditorMode:
         response = input(prompt).strip().upper()
 
         if response == 'FINISHED':
-            if self.current_subject and self.current_quiz and self.quiz_questions_dictionary:
-                self.data[self.current_subject][self.current_quiz] = self.quiz_questions_dictionary
+            if self.current_subject_name and self.current_quiz_name and self.quiz_questions_dictionary:
+                self.quiz_normalization()
+                self.data[self.current_subject_name][self.current_quiz_name] = self.quiz_questions_dictionary
             raise ReturnToBeginning()
         elif response == 'BACK':
             raise ReturnToBeginning()
@@ -124,6 +124,10 @@ class EditorMode:
             end_learning()
 
         return response
+
+    def quiz_normalization(self):
+        for key in self.quiz_questions_dictionary.keys():
+            self.quiz_questions_dictionary[key] = asdict(self.quiz_questions_dictionary[key])
 
 def editor_mode(data, end):
         while True:
