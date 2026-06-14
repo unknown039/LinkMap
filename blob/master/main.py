@@ -5,7 +5,7 @@ from pathlib import Path
 import blob.master.modes.learner as learner
 
 import blob.master.modes.editor as editor
-from blob.master.modes.editor import ReturnToBeginning, EditorMode
+from blob.master.modes.editor import ReturnToBeginning, EditorMode, MultipleChoice, ShortResponse
 
 # top of your script — MUST run before importing transformers/torch/sentence_transformers
 import os
@@ -30,19 +30,36 @@ logging.getLogger("torch").setLevel(logging.ERROR)
 
 
 data_file_path = Path(__file__).parent.parent/"resource"/"data.json"
-test_data_file_path = Path(__file__).parent.parent/"resource"/"test_data.json"
+test_data_file_path = Path(__file__).parent.parent / "resource" / "test_data.json"
 
 with open(data_file_path, "r") as f:
     data = json.load(f)
 
-with open(test_data_file_path, "r") as f:
-    test_data = json.load(f)
+with open(test_data_file_path, "r") as f1:
+    test_data = json.load(f1)
+
+def deserialize_test_data():
+    QUESTION_TYPES = {
+        "MC": MultipleChoice,
+        "SR": ShortResponse
+    }
+
+    def deserialize_question(dataclass: dict):
+        try:
+            return QUESTION_TYPES[dataclass["type"]](**dataclass)
+        except KeyError:
+            raise ValueError(f"Unknown question type: {dataclass.get('type')}")
+
+    for subject, quizzes in test_data.items():
+        for quiz, question in quizzes.items():
+            for question_number, question_content in question.items():
+                test_data[subject][quiz][question_number] = deserialize_question(question_content)
 
 def end():
     print(json.dumps(data, indent=4))
     print("File is overwritten")
-    with open (data_file_path, "w") as f1:
-        f1.write(json.dumps(data, indent=4))
+    with open (data_file_path, "w") as f2:
+        f2.write(json.dumps(data, indent=4))
 
     print(json.dumps(test_data, indent=4))
     print("Test data is overwritten")
@@ -55,7 +72,7 @@ def end_learning():
     raise SystemExit("Exiting LinkMap")
 
 if __name__ == "__main__":
-    print("Type STOP at any moment to end the program")
+    deserialize_test_data()
 
     while True:
         try:

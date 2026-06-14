@@ -1,24 +1,8 @@
 (Started on 2026 - 01 - 28)
 
-- [ ] Put all types of questions into a function
+- [ ] Remodel to Classes
   - [ ] Editor
   - [ ] Learner
-- [ ] Fix Selected-Response score cap
-- [ ] Warn about a set of one in Set Completion
-- [ ] Add no partial credit as an option to short response
-- [ ] Change the prompt from "Question:" to "Prompt: " in short response
-- [ ] Add keywords checker to the logic loop when 
-  - [ ] subject does not exist
-  - [ ] prompting create or modify a quiz
-  - [ ] prompting create or modify a subject
-- [ ] Add a prompting option to Matching in
-  - [ ] Editor mode
-  - [ ] Scoring in learner mode
-  - [ ] Do not use the prompt if it is empty
-- [ ] Remake answer evaluation in short response (in learner mode)
-- [ ] Remove the extra space between the provided set and list of all elements in Matching
-- [ ] Fix number of questions being wrong in matching
-- [ ] Fix Set completion in Learner mode
-- [ ] Add "Correct" messages to all other questions
+- [ ] Fix FINISHED not ending immediately
 - [ ] Rewrite the README.md file
 - [ ] Fix any errors found

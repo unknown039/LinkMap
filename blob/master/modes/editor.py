@@ -1,14 +1,16 @@
 from dataclasses import dataclass, field, asdict
-
+from typing import Literal
 
 @dataclass
 class MultipleChoice:
+    type: Literal["MC"] = "MC"
     question: str = ""
     correct_answer: str = ""
     answers_list: list[str] = field(default_factory=list)
 
 @dataclass
 class ShortResponse:
+    type: Literal["SR"] = "SR"
     question: str = ""
     correct_answer: str = ""
 
@@ -26,6 +28,7 @@ def mc():
         incorrect_answer = input("Incorrect Answer: ")
 
         if not incorrect_answer:
+            print()
             break
 
         question.answers_list.append(incorrect_answer)
@@ -36,6 +39,7 @@ def sr():
     question = ShortResponse()
     question.question = input("Question: ")
     question.correct_answer = input("Correct Answer: ")
+    print()
 
     return question
 
@@ -69,7 +73,7 @@ class EditorMode:
 
     def create_question(self, question_type=None):
         if question_type is None:
-            question_type = self.check_and_prompt("Question Type: ")
+            question_type = self.check_and_prompt("\nQuestion Type: ")
 
         match question_type:
             case "MC":
@@ -115,8 +119,8 @@ class EditorMode:
 
         if response == 'FINISHED':
             if self.current_subject_name and self.current_quiz_name and self.quiz_questions_dictionary:
-                self.quiz_normalization()
                 self.data[self.current_subject_name][self.current_quiz_name] = self.quiz_questions_dictionary
+                self.quiz_normalization()
             raise ReturnToBeginning()
         elif response == 'BACK':
             raise ReturnToBeginning()
@@ -126,8 +130,10 @@ class EditorMode:
         return response
 
     def quiz_normalization(self):
-        for key in self.quiz_questions_dictionary.keys():
-            self.quiz_questions_dictionary[key] = asdict(self.quiz_questions_dictionary[key])
+        for subject_name, quizzes in self.data.items():
+            for quiz_name, question in quizzes.items():
+                for question_number, question_content in question.items():
+                    self.data[subject_name][quiz_name][question_number] = asdict(question_content)
 
 def editor_mode(data, end):
         while True:
