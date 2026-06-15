@@ -4,5 +4,3 @@ venv
 blob/master/main_original.py
 blob/resource/test_data.json
 blob/resource/data.json
-
-.gitignore
