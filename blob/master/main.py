@@ -38,15 +38,23 @@ with open(data_file_path, "r") as f:
 with open(test_data_file_path, "r") as f1:
     test_data = json.load(f1)
 
+def serialize_data(data_to_serialize: dict):
+    for subject_name, quizzes in data_to_serialize.items():
+        for quiz_name, question in quizzes.items():
+            for question_number, question_content in question.items():
+                data_to_serialize[subject_name][quiz_name][question_number] = asdict(question_content)
+
+    return data_to_serialize
+
 def deserialize_test_data():
-    QUESTION_TYPES = {
+    question_types = {
         "MC": MultipleChoice,
         "SR": ShortResponse
     }
 
     def deserialize_question(dataclass: dict):
         try:
-            return QUESTION_TYPES[dataclass["type"]](**dataclass)
+            return question_types[dataclass["type"]](**dataclass)
         except KeyError:
             raise ValueError(f"Unknown question type: {dataclass.get('type')}")
 
@@ -61,6 +69,8 @@ def end():
     with open (data_file_path, "w") as f2:
         f2.write(json.dumps(data, indent=4))
 
+    global test_data
+    test_data = serialize_data(test_data)
     print(json.dumps(test_data, indent=4))
     print("Test data is overwritten")
     with open(test_data_file_path, "w") as f2:
@@ -74,29 +84,25 @@ def end_learning():
 if __name__ == "__main__":
     deserialize_test_data()
 
+    def mode_control(roles):
+        if roles == "e":
+            edit = EditorMode(test_data, end)
+            edit.editor_mode_test()
+        elif roles == "l":
+            learner.learner_mode(data)
+        elif roles == "stop":
+            end_learning()
+        elif roles == "finished":
+            end()
+
     while True:
         try:
             role = input("Are you editing or learning? (E/L) ").lower().strip()
             print()
 
-            if role == "e":
-                edit = EditorMode(test_data, end)
-                edit.editor_mode_test()
-            elif role == "l":
-                learner.learner_mode(data)
-            elif role == "stop":
-                end_learning()
-            elif role == "finished":
-                end()
+            mode_control(role)
         except ReturnToBeginning:
             role = input("Are you editing or learning? (E/L) ").lower().strip()
             print()
 
-            if role == "e":
-                editor.editor_mode(data, end)
-            elif role == "l":
-                learner.learner_mode(data)
-            elif role == "finished":
-                end()
-            elif role == "stop":
-                end_learning()
+            mode_control(role)
