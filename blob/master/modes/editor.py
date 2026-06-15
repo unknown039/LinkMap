@@ -82,6 +82,7 @@ class EditorMode:
                 print(f"Keywords are now disabled\n")
                 return sr()
             case _:
+                print(f"Invalid question type")
                 return self.create_question()
 
     def get_subject(self):
@@ -119,6 +120,7 @@ class EditorMode:
 
             self.end()
         elif response == 'BACK':
+            print()
             raise ReturnToBeginning()
         elif response == 'STOP':
             end_learning()

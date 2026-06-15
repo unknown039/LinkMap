@@ -84,25 +84,19 @@ def end_learning():
 if __name__ == "__main__":
     deserialize_test_data()
 
-    def mode_control(roles):
-        if roles == "e":
-            edit = EditorMode(test_data, end)
-            edit.editor_mode_test()
-        elif roles == "l":
-            learner.learner_mode(data)
-        elif roles == "stop":
-            end_learning()
-        elif roles == "finished":
-            end()
-
     while True:
         try:
             role = input("Are you editing or learning? (E/L) ").lower().strip()
             print()
 
-            mode_control(role)
+            if role == "e":
+                edit = EditorMode(test_data, end)
+                edit.editor_mode_test()
+            elif role == "l":
+                learner.learner_mode(data)
+            elif role == "stop":
+                end_learning()
+            elif role == "finished":
+                end()
         except ReturnToBeginning:
-            role = input("Are you editing or learning? (E/L) ").lower().strip()
-            print()
-
-            mode_control(role)
+            pass
