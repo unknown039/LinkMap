@@ -26,7 +26,7 @@ def deserialize_test_data():
 
     def deserialize_question(dataclass: dict):
         try:
-            return question_types[dataclass["type"]](**dataclass)
+            return question_types[dataclass["type"]](**{k: v for k, v in dataclass.items() if k != "type"})
         except KeyError:
             raise ValueError(f"Unknown question type: {dataclass.get('type')}")
 
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            role = input("Are you editing or learning?").lower().strip()
+            role = input("Editor/Learner: ").lower().strip()
             print()
 
             if role == "e":
