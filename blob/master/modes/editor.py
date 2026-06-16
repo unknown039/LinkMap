@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Literal
 
+class ReturnToBeginning (Exception):
+    pass
+
 @dataclass
 class MultipleChoice:
     type: Literal["MC"] = "MC"
@@ -13,9 +16,6 @@ class ShortResponse:
     type: Literal["SR"] = "SR"
     question: str = ""
     correct_answer: str = ""
-
-class ReturnToBeginning (Exception):
-    pass
 
 def mc():
     question = MultipleChoice()
