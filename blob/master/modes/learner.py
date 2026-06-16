@@ -1,9 +1,8 @@
 import os
 from contextlib import redirect_stdout, redirect_stderr
 from copy import deepcopy
-from random import shuffle
-
 from blob.master.modes.editor import MultipleChoice, ShortResponse
+from random import shuffle
 from string import ascii_uppercase
 
 class ReturnToBeginning(Exception):
@@ -11,7 +10,7 @@ class ReturnToBeginning(Exception):
 
 class Learner:
     def __init__(self, data):
-        self.model = load_model_silently()
+        self.model, self.cos_sim = load_model_silently()
         self.data = data
         self.subject_prompt = "Subject: "
         self.quiz_prompt = "Quiz: "
@@ -21,8 +20,64 @@ class Learner:
         while True:
             subject = self.get_subject_name()
             quiz = self.get_quiz_name(subject)
+            print()
 
             self.quiz_mode(self.data[subject][quiz].values())
+
+    def quiz_mode(self, quiz):
+        quiz = deepcopy(list(quiz))
+        shuffle(quiz)
+        score = 0
+        total_score = 0
+
+        # TODO: Add feature to enable immediate feedback
+
+        for question_index in range(len(quiz)):
+            question = quiz[question_index]
+
+            print(f"{question_index + 1}. ", end="")
+
+            match type(question).__name__:
+                case "MultipleChoice":
+                    score += self.mc(question)
+                case "ShortResponse":
+                    score += self.sr(question)
+                case _:
+                    raise TypeError("Invalid question type")
+
+            total_score += question.points_worth
+            print()
+
+        print(f"score: {score:.3g}/{total_score:g} | {score/total_score*100:.2f}%")
+
+    def mc(self, mc_question=MultipleChoice):
+        correct_answer = None
+        print(mc_question.prompt)
+        shuffle(mc_question.answers_list)
+
+        for i in range(len(mc_question.answers_list)):
+            print(f"{self.alphabet[i]}. {mc_question.answers_list[i]}")
+
+            if mc_question.answers_list[i] == mc_question.correct_answer:
+                correct_answer = self.alphabet[i]
+
+        learner_answer = input("\nAnswer: ").strip().upper()
+
+        if correct_answer is None:
+            raise Exception("Correct answer never got assigned to an alphabet")
+
+        return mc_question.points_worth if learner_answer == correct_answer else 0
+
+    def sr(self, sr_question=ShortResponse):
+        print(f"{sr_question.prompt}")
+
+        if not sr_question.partial_credit:
+            return sr_question.correct_answer == input("Answer: ").strip()
+
+        # TODO: Transformer model is not great at dealing with negation
+
+        return max(0, self.cos_sim(self.model.encode(sr_question.correct_answer.strip(), convert_to_tensor=True),
+        self.model.encode(input("Answer: ").strip(), convert_to_tensor=True)).item()) * sr_question.points_worth
 
     def get_subject_name(self):
         while True:
@@ -56,55 +111,14 @@ class Learner:
             return response.lower(), old_response
         return response
 
-    def quiz_mode(self, quiz):
-        quiz = deepcopy(list(quiz))
-        shuffle(quiz)
-        score = 0
-        total_score = 0
-
-        def mc(mc_question=MultipleChoice):
-            nonlocal total_score
-
-            total_score += mc_question.points_worth
-            correct_answer = None
-            print(mc_question.prompt)
-            shuffle(mc_question.answers_list)
-
-            for i in range(len(mc_question.answers_list)):
-                print(f"{self.alphabet[i]}. {mc_question.answers_list[i]}")
-
-                if mc_question.answers_list[i] == mc_question.correct_answer:
-                    correct_answer = self.alphabet[i]
-
-            learner_answer = input("\nAnswer: ").strip().upper()
-
-            if correct_answer is None:
-                raise Exception("Correct answer never got assigned to an alphabet")
-
-            return mc_question.points_worth if learner_answer == correct_answer else 0
-
-        def sr(sr_question=ShortResponse):
-            nonlocal total_score
-
-            total_score += sr_question.points_worth
-
-
-        for question in quiz:
-            match type(question).__name__:
-                case "MultipleChoice":
-                    score += mc(question)
-                case "ShortResponse":
-                    pass
-                case _:
-                    raise TypeError("Invalid question type")
-
 def load_model_silently(model_name="sentence-transformers/all-MiniLM-L6-v2"):
     """
     Loads the sentence embedding model used for semantic
     similarity comparisons between user text and stored text.
     Suppresses startup output and requires local cache.
     """
-    print(f"Loading transformer model: {model_name}\n")
+    print(f"Loading transformer model: {model_name}")
+    print(f"This may take 10-30 seconds.\n")
 
     # TODO: Package model with distribution
 
@@ -133,4 +147,6 @@ def load_model_silently(model_name="sentence-transformers/all-MiniLM-L6-v2"):
     with open(os.devnull, "w") as devnull, redirect_stdout(devnull), redirect_stderr(devnull):
         from sentence_transformers import SentenceTransformer
         model = SentenceTransformer(model_name, local_files_only=True)  # local_files_only=True ensures no hub contact
-    return model
+    from sentence_transformers.util import cos_sim
+
+    return model, cos_sim
