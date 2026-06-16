@@ -42,7 +42,7 @@ def sr():
 
     return question
 
-class EditorMode:
+class Editor:
     def __init__(self, data, end):
         self.data = data
         self.end = end
@@ -50,7 +50,7 @@ class EditorMode:
         self.current_quiz_name = None
         self.quiz_questions_dictionary = None
 
-    def editor_mode_test(self):
+    def editor_mode(self):
         while True:
             self.current_subject_name = self.get_subject()
             self.current_quiz_name = self.get_quiz()

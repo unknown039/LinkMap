@@ -4,9 +4,25 @@ from contextlib import redirect_stdout, redirect_stderr
 class ReturnToBeginning(Exception):
     pass
 
+
+def check_and_prompt(prompt):
+    from ..main import end_learning
+
+    response = input(prompt).strip().upper()
+
+    if response == "FINISHED" or response == "STOP":
+        end_learning()
+    elif response == "BACK":
+        raise ReturnToBeginning()
+
+    return response
+
 class Learner:
     def __init__(self):
         self.model = load_model_silently()
+
+    def learner_mode(self):
+        pass
 
 def load_model_silently(model_name="sentence-transformers/all-MiniLM-L6-v2"):
     """
