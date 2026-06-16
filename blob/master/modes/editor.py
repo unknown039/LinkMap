@@ -7,19 +7,57 @@ class ReturnToBeginning (Exception):
 @dataclass
 class MultipleChoice:
     type: Literal["MC"] = "MC"
-    question: str = ""
-    correct_answer: str = ""
+    prompt: str = None
+    correct_answer: str = None
     answers_list: list[str] = field(default_factory=list)
+    points_worth: int = None
 
 @dataclass
 class ShortResponse:
     type: Literal["SR"] = "SR"
-    question: str = ""
-    correct_answer: str = ""
+    prompt: str = None
+    correct_answer: str = None
+    points_worth: int = None
+    partial_credit: bool = None
+
+def get_valid_number(prompt, number_type, lower_range, upper_range):
+    while True:
+        response = input(prompt)
+
+        try:
+            if number_type == "int":
+                value = int(response)
+            elif number_type == "float":
+                value = float(response)
+            else:
+                print(f"{number_type} is not a supported type")
+                continue
+
+            if value < lower_range or value > upper_range:
+                print(f"Must within {lower_range}-{upper_range}\n")
+                continue
+
+            return value
+        except ValueError:
+            print(f"{response} is not a number\n")
+
+def get_boolean(prompt, true, false):
+    true = true.lower()
+    false = false.lower()
+
+    while True:
+        response = input(prompt).strip().lower()
+
+        if response == true:
+            return True
+        elif response == false:
+            return False
+
+        print(f'{response} is not "{true}" or "{false}"\n')
 
 def mc():
     question = MultipleChoice()
-    question.question = input("Question: ")
+    question.prompt = input("Prompt: ")
     question.correct_answer = input("Correct Answer: ")
     question.answers_list.append(question.correct_answer)
 
@@ -32,12 +70,17 @@ def mc():
 
         question.answers_list.append(incorrect_answer)
 
+    question.points_worth = get_valid_number("Points worth: ", "int", 1, float('inf'))
+    print()
+
     return question
 
 def sr():
     question = ShortResponse()
-    question.question = input("Question: ")
+    question.prompt = input("Prompt: ")
     question.correct_answer = input("Correct Answer: ")
+    question.points_worth = get_valid_number("Points worth: ", "int", 1, float('inf'))
+    question.partial_credit = get_boolean("Allow partial credit: ", "Y", "N")
     print()
 
     return question

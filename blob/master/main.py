@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            role = input("Are you editing or learning? (E/L) ").lower().strip()
+            role = input("Are you editing or learning?").lower().strip()
             print()
 
             if role == "e":
@@ -66,5 +66,7 @@ if __name__ == "__main__":
                 end_learning()
             elif role == "finished":
                 end()
+            else:
+                print(f'{role} is not "E" or "L"')
         except ReturnToBeginning:
             pass

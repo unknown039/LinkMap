@@ -3,6 +3,9 @@ from contextlib import redirect_stdout, redirect_stderr
 from copy import deepcopy
 from random import shuffle
 
+from blob.master.modes.editor import MultipleChoice, ShortResponse
+from string import ascii_uppercase
+
 class ReturnToBeginning(Exception):
     pass
 
@@ -12,6 +15,7 @@ class Learner:
         self.data = data
         self.subject_prompt = "Subject: "
         self.quiz_prompt = "Quiz: "
+        self.alphabet = ascii_uppercase
 
     def learner_mode(self):
         while True:
@@ -55,8 +59,44 @@ class Learner:
     def quiz_mode(self, quiz):
         quiz = deepcopy(list(quiz))
         shuffle(quiz)
+        score = 0
+        total_score = 0
 
-        print(f"{quiz}")
+        def mc(mc_question=MultipleChoice):
+            nonlocal total_score
+
+            total_score += mc_question.points_worth
+            correct_answer = None
+            print(mc_question.prompt)
+            shuffle(mc_question.answers_list)
+
+            for i in range(len(mc_question.answers_list)):
+                print(f"{self.alphabet[i]}. {mc_question.answers_list[i]}")
+
+                if mc_question.answers_list[i] == mc_question.correct_answer:
+                    correct_answer = self.alphabet[i]
+
+            learner_answer = input("\nAnswer: ").strip().upper()
+
+            if correct_answer is None:
+                raise Exception("Correct answer never got assigned to an alphabet")
+
+            return mc_question.points_worth if learner_answer == correct_answer else 0
+
+        def sr(sr_question=ShortResponse):
+            nonlocal total_score
+
+            total_score += sr_question.points_worth
+
+
+        for question in quiz:
+            match type(question).__name__:
+                case "MultipleChoice":
+                    score += mc(question)
+                case "ShortResponse":
+                    pass
+                case _:
+                    raise TypeError("Invalid question type")
 
 def load_model_silently(model_name="sentence-transformers/all-MiniLM-L6-v2"):
     """
@@ -64,6 +104,7 @@ def load_model_silently(model_name="sentence-transformers/all-MiniLM-L6-v2"):
     similarity comparisons between user text and stored text.
     Suppresses startup output and requires local cache.
     """
+    print(f"Loading transformer model: {model_name}\n")
 
     # TODO: Package model with distribution
 
