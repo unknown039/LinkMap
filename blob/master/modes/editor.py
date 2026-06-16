@@ -1,24 +1,28 @@
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Literal, Optional
 
 class ReturnToBeginning (Exception):
     pass
 
+# Defaults allows incremental construction
 @dataclass
-class MultipleChoice:
-    type: Literal["MC"] = "MC"
-    prompt: str = None
-    correct_answer: str = None
-    answers_list: list[str] = field(default_factory=list)
-    points_worth: int = None
+class Question:
+    type: Optional[str] = None
+    prompt: Optional[str] = None
+    points_worth: Optional[int] = None
+    partial_credit: bool = False
 
 @dataclass
-class ShortResponse:
-    type: Literal["SR"] = "SR"
-    prompt: str = None
-    correct_answer: str = None
-    points_worth: int = None
-    partial_credit: bool = None
+class MultipleChoice(Question):
+    type: Literal["MC"] = field(init=False, default="MC")
+    correct_answer: Optional[str] = None
+    answers_list: list[str] = field(default_factory=list)
+
+
+@dataclass
+class ShortResponse(Question):
+    type: Literal["SR"] = field(init=False, default="SR")
+    correct_answer: Optional[str] = None
 
 def get_valid_number(prompt, number_type, lower_range, upper_range):
     while True:
