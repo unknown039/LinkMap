@@ -90,9 +90,9 @@ def sr():
     return question
 
 class Editor:
-    def __init__(self, data, end):
+    def __init__(self, data, save):
         self.data = data
-        self.end = end
+        self.save = save
         self.current_subject_name = None
         self.current_quiz_name = None
         self.quiz_questions_dictionary = None
@@ -157,19 +157,17 @@ class Editor:
         return quiz
 
     def check_and_prompt(self, prompt):
-        from ..main import end_learning
-
         response = input(prompt).strip().upper()
 
-        if response == 'FINISHED':
+        if response == 'SAVE':
             if self.current_subject_name and self.current_quiz_name and self.quiz_questions_dictionary:
                 self.data[self.current_subject_name][self.current_quiz_name] = self.quiz_questions_dictionary
 
-            self.end()
+            self.save()
         elif response == 'BACK':
             print()
             raise ReturnToBeginning()
         elif response == 'STOP':
-            end_learning()
+            raise SystemExit("Exiting LinkMap")
 
         return response

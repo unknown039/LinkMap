@@ -89,8 +89,9 @@ def get_nli_scores(sentence1: str, sentence2: str):
 alphabet = ascii_uppercase
 
 class Learner:
-    def __init__(self, data):
+    def __init__(self, data, save):
         self.data = data
+        self.save = save
         self.subject_prompt = "Subject: "
         self.quiz_prompt = "Quiz: "
         self.instant_kr_prompt = "Instant KR: "
@@ -164,6 +165,7 @@ class Learner:
         # TODO: Maybe switch to a better model
         nli_scores = get_nli_scores(learner_answer, sr_question.correct_answer)
         answer_is_incorrect = max(nli_scores["contradiction"], nli_scores["neutral"]) > 0.75 or nli_scores["entailment"] < 0.5
+        print(nli_scores)
         self.print_instant_feedback(not answer_is_incorrect, sr_question.correct_answer)
 
         if answer_is_incorrect:
@@ -211,11 +213,12 @@ class Learner:
         old_response = input(prompt).strip()
         response = old_response.upper()
 
-        if response == "FINISHED" or response == "STOP":
-            from ..main import end_learning
-            end_learning()
+        if response == "STOP":
+            raise SystemExit("Exiting LinkMap")
         elif response == "BACK":
             raise ReturnToBeginning()
+        elif response == "SAVE":
+            self.save()
 
         if prompt == self.subject_prompt or prompt == self.quiz_prompt or prompt == self.instant_kr_prompt:
             return response.lower(), old_response
