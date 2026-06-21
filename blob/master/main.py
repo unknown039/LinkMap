@@ -1,6 +1,6 @@
-import blob.master.modes.learner as learner
+from blob.master.modes.learner import Learner
 from blob.master.modes.editor import ReturnToBeginning, Editor
-from data_manager import data, save
+from blob.master.data_manager import data, save
 
 if __name__ == "__main__":
     while True:
@@ -12,7 +12,7 @@ if __name__ == "__main__":
                 edit = Editor(data, save)
                 edit.editor_mode()
             elif role == "l":
-                learn = learner.Learner(data, save)
+                learn = Learner(data, save)
                 learn.learner_mode()
             elif role == "stop":
                 raise SystemExit("Exiting LinkMap")
