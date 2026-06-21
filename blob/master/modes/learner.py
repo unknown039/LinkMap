@@ -95,13 +95,14 @@ class Learner:
         self.subject_prompt = "Subject: "
         self.quiz_prompt = "Quiz: "
         self.instant_kr_prompt = "Instant KR: "
-        self.instant_feedback = True
+        self.instant_feedback = None
         load_model_silently()
 
     def learner_mode(self):
         while True:
             subject = self.get_subject_name()
             quiz = self.get_quiz_name(subject)
+            self.instant_feedback = self.get_instant_kr()
 
             print()
 
@@ -129,7 +130,7 @@ class Learner:
             total_score += question.points_worth
             print()
 
-        print(f"score: {score:.3g}/{total_score:g} | {score/total_score*100:.2f}%")
+        print(f"Score: {score:.3g}/{total_score:g} | {score/total_score*100:.2f}%\n")
 
     def mc(self, mc_question=MultipleChoice):
         correct_answer = None
