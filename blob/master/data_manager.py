@@ -1,3 +1,4 @@
+import sys
 from dataclasses import asdict
 from blob.master.modes.editor import ReturnToBeginning, MultipleChoice, ShortResponse
 from json import dumps, load
@@ -37,9 +38,18 @@ def save():
     print(f"Successfully saved data to {data_file_path}\n")
     raise ReturnToBeginning()
 
-data_file_path = Path(__file__).parent.parent / "resource" / "data.json"
+if getattr(sys, 'frozen', False):
+    BLOB_DIR = Path(sys.executable).parent
+else:
+    BLOB_DIR = Path(__file__).parent.parent
 
-with open(data_file_path, "r") as f1:
-    data = load(f1)
+data_file_path = BLOB_DIR / "resources" / "data.json"
+
+if not data_file_path.exists():
+    data_file_path.parent.mkdir(parents=True, exist_ok=True)
+    data_file_path.write_text("{}", encoding="utf-8")
+
+with data_file_path.open("r", encoding="utf-8") as f:
+    data = load(f)
 
 deserialize_test_data()

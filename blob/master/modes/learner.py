@@ -1,6 +1,8 @@
 import os
 from contextlib import redirect_stdout, redirect_stderr
 from copy import deepcopy
+
+from blob.master.data_manager import BLOB_DIR
 from blob.master.modes.editor import MultipleChoice, ShortResponse
 from functools import cache
 from random import shuffle
@@ -11,18 +13,16 @@ class ReturnToBeginning(Exception):
     pass
 
 @cache
-def load_model_silently(model1_name="sentence-transformers/all-MiniLM-L6-v2",
-                        model2_name="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"):
+def load_model_silently(model1_name=str(BLOB_DIR / "resources" / "models" / "sentence_transformer"),
+                        model2_name=str(BLOB_DIR / "resources" / "models" / "deberta")):
     """
     Loads the sentence embedding model used for semantic
     similarity comparisons between user text and stored text.
     Suppresses startup output and requires local cache.
     """
-    print(f"Loading Sentence Transformer model: {model1_name}")
-    print(f"Loading Natural Language Inference model: {model2_name}")
+    print(f"Loading Sentence Transformer model: all-MiniLM-L6-v2")
+    print(f"Loading Natural Language Inference model: DeBERTa-v3-base-mnli-fever-anli")
     print(f"This may take 10-30 seconds.\n")
-
-    # TODO: Package model with distribution
 
     # MUST run before importing transformers/torch/sentence_transformers
     from os import environ
@@ -113,8 +113,6 @@ class Learner:
         score = 0
         total_score = 0
 
-        # TODO: Add feature to enable immediate feedback
-
         for question_index in range(len(quiz)):
             question = quiz[question_index]
 
@@ -162,10 +160,8 @@ class Learner:
 
             return sr_question.points_worth if sr_question.correct_answer == learner_answer else 0
 
-        # TODO: Maybe switch to a better model
         nli_scores = get_nli_scores(learner_answer, sr_question.correct_answer)
         answer_is_incorrect = max(nli_scores["contradiction"], nli_scores["neutral"]) > 0.75 or nli_scores["entailment"] < 0.5
-        print(nli_scores)
         self.print_instant_feedback(not answer_is_incorrect, sr_question.correct_answer)
 
         if answer_is_incorrect:

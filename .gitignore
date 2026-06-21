@@ -2,8 +2,7 @@
 venv
 
 blob/master/main_original.py
-blob/resource/data.json
-blob/resource/data.json
+blob/resources/
 
 __pycache__/
 *.pyc
