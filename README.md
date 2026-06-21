@@ -99,3 +99,58 @@ Abbreviation: **SR**
 > Correct Answer: Repeated addition  
 > Points worth: 5  
 > Allow partial credit: Y
+
+---
+
+## Learner Mode  
+
+The mode will start with loading **two** machine learning model, which will
+take some time to complete.
+
+### Subject & Quiz
+
+1. Enter the subject name (*must already exist within saved data*) 
+2. Same for the quiz name
+3. Type "T" to get feedback on every question or "F" to not get feedback. 
+Feedback include whether the answer is correct and the correct answer if 
+the learner's answer is incorrect.
+
+### Example 1:
+> Loading Sentence Transformer model: all-MiniLM-L6-v2  
+> Loading Natural Language Inference model: DeBERTa-v3-base-mnli-fever-anli  
+> This may take 10-30 seconds.  
+>   
+> Subject: math  
+> Quiz: algebra  
+> Instant Feedback: T
+
+With instant feedback:
+> 1\. What is multiplication?  
+> Answer: Test incorrect answer  
+> Incorrect: Repeated addition  
+> 
+>
+> 2\. What is a number?  
+> Answer: An object to represent quantity  
+> Correct!
+
+Without instant feedback:
+> 1\. What is multiplication?  
+> Answer: Test incorrect answer  
+> 
+> 
+> 2\. What is a number?  
+> Answer: An object to represent quantity
+
+At the end, the quiz to print the amount of points (up to 2 decimal 
+places) earned out of the possible amount of points and the percentage 
+score (up to 2 decimal places). The decimal places usually comes up when
+partial points are allowed on questions:
+
+### Example 1:
+> Score: 0/6 | 0.00%  
+
+### Example 2: 
+> Score: 0.76/6 | 12.73%  
+
+Then, the process repeats and the learner is prompted for the subject.

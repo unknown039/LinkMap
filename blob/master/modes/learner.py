@@ -94,7 +94,7 @@ class Learner:
         self.save = save
         self.subject_prompt = "Subject: "
         self.quiz_prompt = "Quiz: "
-        self.instant_kr_prompt = "Instant KR: "
+        self.instant_feedback_prompt = "Instant Feedback: "
         self.instant_feedback = None
         load_model_silently()
 
@@ -102,7 +102,7 @@ class Learner:
         while True:
             subject = self.get_subject_name()
             quiz = self.get_quiz_name(subject)
-            self.instant_feedback = self.get_instant_kr()
+            self.instant_feedback = self.get_instant_feedback()
 
             print()
 
@@ -130,7 +130,7 @@ class Learner:
             total_score += question.points_worth
             print()
 
-        print(f"Score: {score:.3g}/{total_score:g} | {score/total_score*100:.2f}%\n")
+        print(f"Score: {score:.2g}/{total_score:g} | {score/total_score*100:.2f}%\n")
 
     def mc(self, mc_question=MultipleChoice):
         correct_answer = None
@@ -188,9 +188,9 @@ class Learner:
 
             print(f"{quiz[1]} does not exist\n")
 
-    def get_instant_kr(self):
+    def get_instant_feedback(self):
         while True:
-            response = self.check_and_prompt(self.instant_kr_prompt)
+            response = self.check_and_prompt(self.instant_feedback_prompt)
 
             if response[0] == "t":
                 return True
@@ -217,6 +217,6 @@ class Learner:
         elif response == "SAVE":
             self.save()
 
-        if prompt == self.subject_prompt or prompt == self.quiz_prompt or prompt == self.instant_kr_prompt:
+        if prompt == self.subject_prompt or prompt == self.quiz_prompt or prompt == self.instant_feedback_prompt:
             return response.lower(), old_response
         return response
