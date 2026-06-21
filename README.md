@@ -10,7 +10,25 @@
 After seeing the prompt:
 > Editor/Learner:
 
-Type "E" to go into editor mode, "L" to go into learner mode
+Input "E" to go into editor mode, "L" to go into learner mode  
+
+*Note: Remember to hit enter*
+
+---
+## Keywords
+Keywords are special strings that helps to control the program. There are 
+currently 3 keywords:
+
+- **STOP:** Immediately end the programs and discard any changes made
+within the editor
+- **BACK:** Go back to the beginning prompt, "Editor/Learner: "
+- **SAVE:** Save any changes made within editor into the data storage. If
+this keyword is not used before the program has ended, changes will be
+discarded  
+
+These keywords can generally be used everything except the following places:
+- When adding a question in editor mode
+- During a quiz in learner mode
 
 ---
 ## Editor Mode
