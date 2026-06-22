@@ -99,8 +99,9 @@ class Editor:
 
     def editor_mode(self):
         while True:
-            self.current_subject_name = self.get_subject()
-            self.current_quiz_name = self.get_quiz()
+            self.reset_fields()
+            self.get_subject()
+            self.get_quiz()
             self.quiz_questions_dictionary = self.data[self.current_subject_name][self.current_quiz_name]
             quiz_length = len(self.quiz_questions_dictionary)
 
@@ -141,8 +142,8 @@ class Editor:
             print(f"Adding new subject")
             self.data[subject] = {}
 
+        self.current_subject_name = subject
         print()
-        return subject
 
     def get_quiz(self):
         quiz = self.check_and_prompt("Quiz: ").lower()
@@ -153,8 +154,8 @@ class Editor:
             print(f"Adding new quiz")
             self.data[self.current_subject_name][quiz] = {}
 
+        self.current_quiz_name = quiz
         print()
-        return quiz
 
     def check_and_prompt(self, prompt):
         response = input(prompt).strip().upper()
@@ -171,3 +172,8 @@ class Editor:
             raise SystemExit("Exiting LinkMap")
 
         return response
+
+    def reset_fields(self):
+        self.current_subject_name = None
+        self.current_quiz_name = None
+        self.quiz_questions_dictionary = None
