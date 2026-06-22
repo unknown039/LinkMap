@@ -1,5 +1,6 @@
+from blob.master.exception_classes import ReturnToBeginning
 from blob.master.modes.learner import Learner
-from blob.master.modes.editor import ReturnToBeginning, Editor
+from blob.master.modes.editor import Editor
 from blob.master.data_manager import data, save
 
 if __name__ == "__main__":
@@ -19,6 +20,6 @@ if __name__ == "__main__":
             elif role == "save":
                 save()
             else:
-                print(f'{role} is not "E" or "L"')
+                print(f'"{role}" is not "E" or "L"')
         except ReturnToBeginning:
             pass

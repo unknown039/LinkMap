@@ -9,8 +9,7 @@ from random import shuffle
 from string import ascii_uppercase
 from torch import no_grad, softmax
 
-class ReturnToBeginning(Exception):
-    pass
+from blob.master.exception_classes import ReturnToBeginning
 
 @cache
 def load_model_silently(model1_name=str(BLOB_DIR / "resources" / "models" / "sentence_transformer"),
@@ -96,7 +95,7 @@ class Learner:
         self.quiz_prompt = "Quiz: "
         self.instant_feedback_prompt = "Instant Feedback: "
         self.instant_feedback = None
-        load_model_silently()
+        # load_model_silently()
 
     def learner_mode(self):
         while True:

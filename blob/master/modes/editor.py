@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Literal, Optional
 
-class ReturnToBeginning (Exception):
-    pass
+from blob.master.exception_classes import ReturnToBeginning
+
 
 # Defaults allows incremental construction
 @dataclass

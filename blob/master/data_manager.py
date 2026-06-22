@@ -1,8 +1,11 @@
 import sys
 from dataclasses import asdict
-from blob.master.modes.editor import ReturnToBeginning, MultipleChoice, ShortResponse
+from blob.master.modes.editor import MultipleChoice, ShortResponse
 from json import dumps, load
 from pathlib import Path
+
+from blob.master.exception_classes import ReturnToBeginning
+
 
 def serialize_data(data_to_serialize: dict):
     for subject_name, quizzes in data_to_serialize.items():
