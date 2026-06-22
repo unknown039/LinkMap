@@ -133,7 +133,10 @@ class Learner:
             total_score += question.points_worth
             print()
 
-        print(f"Score: {score:.2g}/{total_score:g} | {score/total_score*100:.2f}%\n")
+        def format_score(x):
+            return f"{x:.2f}".rstrip("0").rstrip(".")
+
+        print(f"Score: {format_score(score)}/{format_score(total_score)} | {score/total_score*100:.2f}%\n")
 
     def mc(self, mc_question=MultipleChoice):
         correct_answer = None
@@ -167,6 +170,7 @@ class Learner:
         nli_scores = get_nli_scores(learner_answer, sr_question.correct_answer)
         answer_is_incorrect = max(nli_scores["contradiction"], nli_scores["neutral"]) > 0.75 or nli_scores["entailment"] < 0.5
         self.print_instant_feedback(not answer_is_incorrect, sr_question.correct_answer)
+        print(answer_is_incorrect)
 
         if answer_is_incorrect:
             return 0
