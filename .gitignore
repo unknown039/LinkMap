@@ -6,3 +6,9 @@ blob/resources/
 
 __pycache__/
 *.pyc
+
+note
+main.spec
+dist
+
+build/

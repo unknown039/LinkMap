@@ -1,0 +1,2 @@
+class ReturnToBeginning(Exception):
+    pass
