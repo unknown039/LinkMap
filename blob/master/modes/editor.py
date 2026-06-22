@@ -112,7 +112,6 @@ class Editor:
 
             while True:
                 question_changes = self.check_and_prompt("Enter a number or abbreviation to add or modify a question: ")
-                print(f"{self.quiz_length}. Quiz dictionary: {self.quiz_questions_dictionary}")
 
                 if question_changes.isdigit():
                     if question_changes not in self.quiz_questions_dictionary:
@@ -120,9 +119,7 @@ class Editor:
                         continue
                     self.quiz_questions_dictionary[question_changes] = self.create_question()
                 else:
-                    print(f"{self.quiz_length}. Quiz dictionary: {self.quiz_questions_dictionary}")
                     self.quiz_questions_dictionary[str(self.quiz_length + 1)] = self.create_question(question_changes)
-                    print(f"{self.quiz_length}. Quiz dictionary: {self.quiz_questions_dictionary}")
 
     def create_question(self, question_type=None):
         if question_type is None:

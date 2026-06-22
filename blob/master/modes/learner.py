@@ -170,7 +170,6 @@ class Learner:
         nli_scores = get_nli_scores(learner_answer, sr_question.correct_answer)
         answer_is_incorrect = max(nli_scores["contradiction"], nli_scores["neutral"]) > 0.75 or nli_scores["entailment"] < 0.5
         self.print_instant_feedback(not answer_is_incorrect, sr_question.correct_answer)
-        print(answer_is_incorrect)
 
         if answer_is_incorrect:
             return 0
