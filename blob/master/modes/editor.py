@@ -97,18 +97,22 @@ class Editor:
         self.current_quiz_name = None
         self.quiz_questions_dictionary = None
 
+    @property
+    def quiz_length(self):
+        return len(self.quiz_questions_dictionary)
+
     def editor_mode(self):
         while True:
             self.reset_fields()
             self.get_subject()
             self.get_quiz()
             self.quiz_questions_dictionary = self.data[self.current_subject_name][self.current_quiz_name]
-            quiz_length = len(self.quiz_questions_dictionary)
 
-            print(f"There are currently {quiz_length} quiz questions.")
+            print(f"There are currently {self.quiz_length} quiz questions.")
 
             while True:
                 question_changes = self.check_and_prompt("Enter a number or abbreviation to add or modify a question: ")
+                print(f"{self.quiz_length}. Quiz dictionary: {self.quiz_questions_dictionary}")
 
                 if question_changes.isdigit():
                     if question_changes not in self.quiz_questions_dictionary:
@@ -116,7 +120,9 @@ class Editor:
                         continue
                     self.quiz_questions_dictionary[question_changes] = self.create_question()
                 else:
-                    self.quiz_questions_dictionary[str(quiz_length + 1)] = self.create_question(question_changes)
+                    print(f"{self.quiz_length}. Quiz dictionary: {self.quiz_questions_dictionary}")
+                    self.quiz_questions_dictionary[str(self.quiz_length + 1)] = self.create_question(question_changes)
+                    print(f"{self.quiz_length}. Quiz dictionary: {self.quiz_questions_dictionary}")
 
     def create_question(self, question_type=None):
         if question_type is None:
