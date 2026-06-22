@@ -95,7 +95,7 @@ class Learner:
         self.quiz_prompt = "Quiz: "
         self.instant_feedback_prompt = "Instant Feedback: "
         self.instant_feedback = None
-        # load_model_silently()
+        load_model_silently()
 
     def learner_mode(self):
         while True:
@@ -104,6 +104,10 @@ class Learner:
             self.instant_feedback = self.get_instant_feedback()
 
             print()
+
+            if not self.data[subject][quiz]:
+                print(f"Quiz is empty\n")
+                continue
 
             self.quiz_mode(self.data[subject][quiz].values())
 
