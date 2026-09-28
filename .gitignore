@@ -12,3 +12,6 @@ main.spec
 dist
 
 build/
+LinkMap/
+
+*.zip

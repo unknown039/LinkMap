@@ -15,6 +15,15 @@ Input "E" to go into editor mode, "L" to go into learner mode
 *Note: Remember to hit enter*
 
 ---
+
+## Installation
+
+1. Download the .zip
+2. Extract it to any directory
+3. Double-click the .exe to open the app
+4. (Optional) create a desktop shortcut to it
+
+---
 ## Keywords
 Keywords are special strings that helps to control the program. There are 
 currently 3 keywords:
